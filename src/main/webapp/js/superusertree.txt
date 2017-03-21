@@ -1,0 +1,66 @@
+[{
+            text:'供应商',
+            //id:'1',
+            children:[{
+                text:'信息',
+                leaf:true,
+                id:'1'
+            }]
+        },{
+            text : '操作员',
+            //id : '1',
+            children : [ {
+                        text : ' 信息  ',
+                        leaf : true,
+                        id : '2'
+                    }]
+        },{
+            text:'统计',
+            //id:'2',
+            children : [
+                                    {
+                                            text : '  供应商  ',
+                                            leaf : true,
+                                            id : '31'
+
+                        }, {
+
+                                            text : '  库存 ',
+                                            leaf : true,
+                                            id : '32'
+
+                        }, {
+                                            text : '  仓库  ',
+                                            leaf : true,
+                                            id : '33'
+                        }]
+        },{
+            text:'商品类目',
+            //id:'7',
+            children : [
+                        {
+                            text : '  食品  ',
+                            //id : '71',
+                            children : [{
+                                text:'面包',
+                                id:'41',
+                                leaf:true
+                            },{
+                                text:'饮料',
+                                    id:'42',
+                                    leaf:true
+                            }]
+                        }, {
+                            text : '  生活用品  ',
+                            //id : '72',
+                            children : [{
+                                text:'毛巾',
+                                id:'51',
+                                leaf:true
+                            },{
+                                text:'杯子',
+                                    id:'52',
+                                    leaf:true
+                            }]
+                        }]
+        }]

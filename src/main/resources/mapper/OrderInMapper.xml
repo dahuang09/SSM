@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.core.dao.OrderInMapper">
+  <resultMap id="BaseResultMap" type="com.core.pojo.OrderIn">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="amount" jdbcType="INTEGER" property="amount" />
+    <result column="total" jdbcType="DECIMAL" property="total" />
+    <result column="productDate" jdbcType="DATE" property="productdate" />
+    <result column="keepPeriod" jdbcType="INTEGER" property="keepperiod" />
+    <result column="expiredDate" jdbcType="DATE" property="expireddate" />
+    <result column="dateIn" jdbcType="TIMESTAMP" property="datein" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="orderInNo" jdbcType="VARCHAR" property="orderinno" />
+    <result column="Vendor_id" jdbcType="VARCHAR" property="vendorId" />
+    <result column="Item_id" jdbcType="VARCHAR" property="itemId" />
+    <result column="Warehouse_ID" jdbcType="VARCHAR" property="warehouseId" />
+    <result column="User_id" jdbcType="VARCHAR" property="userId" />
+    <result column="TradeIn_id" jdbcType="VARCHAR" property="tradeinId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, price, amount, total, productDate, keepPeriod, expiredDate, dateIn, remark, orderInNo, 
+    Vendor_id, Item_id, Warehouse_ID, User_id, TradeIn_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from orderin
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from orderin
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.core.pojo.OrderIn">
+    insert into orderin (id, price, amount, 
+      total, productDate, keepPeriod, 
+      expiredDate, dateIn, remark, 
+      orderInNo, Vendor_id, Item_id, 
+      Warehouse_ID, User_id, TradeIn_id
+      )
+    values (#{id,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{amount,jdbcType=INTEGER}, 
+      #{total,jdbcType=DECIMAL}, #{productdate,jdbcType=DATE}, #{keepperiod,jdbcType=INTEGER}, 
+      #{expireddate,jdbcType=DATE}, #{datein,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
+      #{orderinno,jdbcType=VARCHAR}, #{vendorId,jdbcType=VARCHAR}, #{itemId,jdbcType=VARCHAR}, 
+      #{warehouseId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{tradeinId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.core.pojo.OrderIn">
+    insert into orderin
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="total != null">
+        total,
+      </if>
+      <if test="productdate != null">
+        productDate,
+      </if>
+      <if test="keepperiod != null">
+        keepPeriod,
+      </if>
+      <if test="expireddate != null">
+        expiredDate,
+      </if>
+      <if test="datein != null">
+        dateIn,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="orderinno != null">
+        orderInNo,
+      </if>
+      <if test="vendorId != null">
+        Vendor_id,
+      </if>
+      <if test="itemId != null">
+        Item_id,
+      </if>
+      <if test="warehouseId != null">
+        Warehouse_ID,
+      </if>
+      <if test="userId != null">
+        User_id,
+      </if>
+      <if test="tradeinId != null">
+        TradeIn_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="total != null">
+        #{total,jdbcType=DECIMAL},
+      </if>
+      <if test="productdate != null">
+        #{productdate,jdbcType=DATE},
+      </if>
+      <if test="keepperiod != null">
+        #{keepperiod,jdbcType=INTEGER},
+      </if>
+      <if test="expireddate != null">
+        #{expireddate,jdbcType=DATE},
+      </if>
+      <if test="datein != null">
+        #{datein,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="orderinno != null">
+        #{orderinno,jdbcType=VARCHAR},
+      </if>
+      <if test="vendorId != null">
+        #{vendorId,jdbcType=VARCHAR},
+      </if>
+      <if test="itemId != null">
+        #{itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseId != null">
+        #{warehouseId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeinId != null">
+        #{tradeinId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.core.pojo.OrderIn">
+    update orderin
+    <set>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="total != null">
+        total = #{total,jdbcType=DECIMAL},
+      </if>
+      <if test="productdate != null">
+        productDate = #{productdate,jdbcType=DATE},
+      </if>
+      <if test="keepperiod != null">
+        keepPeriod = #{keepperiod,jdbcType=INTEGER},
+      </if>
+      <if test="expireddate != null">
+        expiredDate = #{expireddate,jdbcType=DATE},
+      </if>
+      <if test="datein != null">
+        dateIn = #{datein,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="orderinno != null">
+        orderInNo = #{orderinno,jdbcType=VARCHAR},
+      </if>
+      <if test="vendorId != null">
+        Vendor_id = #{vendorId,jdbcType=VARCHAR},
+      </if>
+      <if test="itemId != null">
+        Item_id = #{itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseId != null">
+        Warehouse_ID = #{warehouseId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        User_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeinId != null">
+        TradeIn_id = #{tradeinId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.core.pojo.OrderIn">
+    update orderin
+    set price = #{price,jdbcType=DECIMAL},
+      amount = #{amount,jdbcType=INTEGER},
+      total = #{total,jdbcType=DECIMAL},
+      productDate = #{productdate,jdbcType=DATE},
+      keepPeriod = #{keepperiod,jdbcType=INTEGER},
+      expiredDate = #{expireddate,jdbcType=DATE},
+      dateIn = #{datein,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR},
+      orderInNo = #{orderinno,jdbcType=VARCHAR},
+      Vendor_id = #{vendorId,jdbcType=VARCHAR},
+      Item_id = #{itemId,jdbcType=VARCHAR},
+      Warehouse_ID = #{warehouseId,jdbcType=VARCHAR},
+      User_id = #{userId,jdbcType=VARCHAR},
+      TradeIn_id = #{tradeinId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

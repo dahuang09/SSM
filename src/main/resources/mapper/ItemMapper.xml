@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.core.dao.ItemMapper">
+  <resultMap id="BaseResultMap" type="com.core.pojo.Item">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="itemName" jdbcType="VARCHAR" property="itemname" />
+    <result column="safetyStock" jdbcType="INTEGER" property="safetystock" />
+    <result column="actualStock" jdbcType="INTEGER" property="actualstock" />
+    <result column="itemNo" jdbcType="VARCHAR" property="itemno" />
+    <result column="Category_id" jdbcType="VARCHAR" property="categoryId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, itemName, safetyStock, actualStock, itemNo, Category_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from item
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from item
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.core.pojo.Item">
+    insert into item (id, itemName, safetyStock, 
+      actualStock, itemNo, Category_id
+      )
+    values (#{id,jdbcType=VARCHAR}, #{itemname,jdbcType=VARCHAR}, #{safetystock,jdbcType=INTEGER}, 
+      #{actualstock,jdbcType=INTEGER}, #{itemno,jdbcType=VARCHAR}, #{categoryId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.core.pojo.Item">
+    insert into item
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="itemname != null">
+        itemName,
+      </if>
+      <if test="safetystock != null">
+        safetyStock,
+      </if>
+      <if test="actualstock != null">
+        actualStock,
+      </if>
+      <if test="itemno != null">
+        itemNo,
+      </if>
+      <if test="categoryId != null">
+        Category_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="itemname != null">
+        #{itemname,jdbcType=VARCHAR},
+      </if>
+      <if test="safetystock != null">
+        #{safetystock,jdbcType=INTEGER},
+      </if>
+      <if test="actualstock != null">
+        #{actualstock,jdbcType=INTEGER},
+      </if>
+      <if test="itemno != null">
+        #{itemno,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryId != null">
+        #{categoryId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.core.pojo.Item">
+    update item
+    <set>
+      <if test="itemname != null">
+        itemName = #{itemname,jdbcType=VARCHAR},
+      </if>
+      <if test="safetystock != null">
+        safetyStock = #{safetystock,jdbcType=INTEGER},
+      </if>
+      <if test="actualstock != null">
+        actualStock = #{actualstock,jdbcType=INTEGER},
+      </if>
+      <if test="itemno != null">
+        itemNo = #{itemno,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryId != null">
+        Category_id = #{categoryId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.core.pojo.Item">
+    update item
+    set itemName = #{itemname,jdbcType=VARCHAR},
+      safetyStock = #{safetystock,jdbcType=INTEGER},
+      actualStock = #{actualstock,jdbcType=INTEGER},
+      itemNo = #{itemno,jdbcType=VARCHAR},
+      Category_id = #{categoryId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

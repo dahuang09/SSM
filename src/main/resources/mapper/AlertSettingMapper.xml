@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.core.dao.AlertSettingMapper">
+  <resultMap id="BaseResultMap" type="com.core.pojo.AlertSetting">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="Item_id" jdbcType="VARCHAR" property="itemId" />
+    <result column="message" jdbcType="VARCHAR" property="message" />
+    <result column="alertAmount" jdbcType="INTEGER" property="alertamount" />
+    <result column="alertExpiredDate" jdbcType="INTEGER" property="alertexpireddate" />
+    <result column="enabled" jdbcType="INTEGER" property="enabled" />
+    <result column="AlertSettingcol" jdbcType="VARCHAR" property="alertsettingcol" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, email, remark, Item_id, message, alertAmount, alertExpiredDate, enabled, AlertSettingcol
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from alertsetting
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from alertsetting
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.core.pojo.AlertSetting">
+    insert into alertsetting (id, email, remark, 
+      Item_id, message, alertAmount, 
+      alertExpiredDate, enabled, AlertSettingcol
+      )
+    values (#{id,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{itemId,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR}, #{alertamount,jdbcType=INTEGER}, 
+      #{alertexpireddate,jdbcType=INTEGER}, #{enabled,jdbcType=INTEGER}, #{alertsettingcol,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.core.pojo.AlertSetting">
+    insert into alertsetting
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="itemId != null">
+        Item_id,
+      </if>
+      <if test="message != null">
+        message,
+      </if>
+      <if test="alertamount != null">
+        alertAmount,
+      </if>
+      <if test="alertexpireddate != null">
+        alertExpiredDate,
+      </if>
+      <if test="enabled != null">
+        enabled,
+      </if>
+      <if test="alertsettingcol != null">
+        AlertSettingcol,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="itemId != null">
+        #{itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null">
+        #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="alertamount != null">
+        #{alertamount,jdbcType=INTEGER},
+      </if>
+      <if test="alertexpireddate != null">
+        #{alertexpireddate,jdbcType=INTEGER},
+      </if>
+      <if test="enabled != null">
+        #{enabled,jdbcType=INTEGER},
+      </if>
+      <if test="alertsettingcol != null">
+        #{alertsettingcol,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.core.pojo.AlertSetting">
+    update alertsetting
+    <set>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="itemId != null">
+        Item_id = #{itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null">
+        message = #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="alertamount != null">
+        alertAmount = #{alertamount,jdbcType=INTEGER},
+      </if>
+      <if test="alertexpireddate != null">
+        alertExpiredDate = #{alertexpireddate,jdbcType=INTEGER},
+      </if>
+      <if test="enabled != null">
+        enabled = #{enabled,jdbcType=INTEGER},
+      </if>
+      <if test="alertsettingcol != null">
+        AlertSettingcol = #{alertsettingcol,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.core.pojo.AlertSetting">
+    update alertsetting
+    set email = #{email,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      Item_id = #{itemId,jdbcType=VARCHAR},
+      message = #{message,jdbcType=VARCHAR},
+      alertAmount = #{alertamount,jdbcType=INTEGER},
+      alertExpiredDate = #{alertexpireddate,jdbcType=INTEGER},
+      enabled = #{enabled,jdbcType=INTEGER},
+      AlertSettingcol = #{alertsettingcol,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
