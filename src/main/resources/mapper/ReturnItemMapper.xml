@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.core.dao.ReturnItemMapper">
+  <resultMap id="BaseResultMap" type="com.core.pojo.ReturnItem">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="returnItemNo" jdbcType="VARCHAR" property="returnitemno" />
+    <result column="reason" jdbcType="VARCHAR" property="reason" />
+    <result column="Item_id" jdbcType="VARCHAR" property="itemId" />
+    <result column="Warehouse_ID" jdbcType="VARCHAR" property="warehouseId" />
+    <result column="User_id" jdbcType="VARCHAR" property="userId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, returnItemNo, reason, Item_id, Warehouse_ID, User_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from returnitem
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from returnitem
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.core.pojo.ReturnItem">
+    insert into returnitem (id, returnItemNo, reason, 
+      Item_id, Warehouse_ID, User_id
+      )
+    values (#{id,jdbcType=VARCHAR}, #{returnitemno,jdbcType=VARCHAR}, #{reason,jdbcType=VARCHAR}, 
+      #{itemId,jdbcType=VARCHAR}, #{warehouseId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.core.pojo.ReturnItem">
+    insert into returnitem
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="returnitemno != null">
+        returnItemNo,
+      </if>
+      <if test="reason != null">
+        reason,
+      </if>
+      <if test="itemId != null">
+        Item_id,
+      </if>
+      <if test="warehouseId != null">
+        Warehouse_ID,
+      </if>
+      <if test="userId != null">
+        User_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="returnitemno != null">
+        #{returnitemno,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="itemId != null">
+        #{itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseId != null">
+        #{warehouseId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.core.pojo.ReturnItem">
+    update returnitem
+    <set>
+      <if test="returnitemno != null">
+        returnItemNo = #{returnitemno,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null">
+        reason = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="itemId != null">
+        Item_id = #{itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseId != null">
+        Warehouse_ID = #{warehouseId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        User_id = #{userId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.core.pojo.ReturnItem">
+    update returnitem
+    set returnItemNo = #{returnitemno,jdbcType=VARCHAR},
+      reason = #{reason,jdbcType=VARCHAR},
+      Item_id = #{itemId,jdbcType=VARCHAR},
+      Warehouse_ID = #{warehouseId,jdbcType=VARCHAR},
+      User_id = #{userId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

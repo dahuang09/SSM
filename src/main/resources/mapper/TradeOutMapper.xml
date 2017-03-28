@@ -4,6 +4,186 @@
   <resultMap id="BaseResultMap" type="com.core.pojo.TradeOut">
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="tradeOutNo" jdbcType="VARCHAR" property="tradeoutno" />
+    <result column="tradeOutDate" jdbcType="DATE" property="tradeoutdate" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="User_id" jdbcType="VARCHAR" property="userId" />
+    <result column="requester" jdbcType="VARCHAR" property="requester" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, tradeOutNo, tradeOutDate, remark, User_id, requester
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tradeout
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tradeout
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.core.pojo.TradeOut">
+    insert into tradeout (id, tradeOutNo, tradeOutDate, 
+      remark, User_id, requester
+      )
+    values (#{id,jdbcType=VARCHAR}, #{tradeoutno,jdbcType=VARCHAR}, #{tradeoutdate,jdbcType=DATE}, 
+      #{remark,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{requester,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.core.pojo.TradeOut">
+    insert into tradeout
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="tradeoutno != null">
+        tradeOutNo,
+      </if>
+      <if test="tradeoutdate != null">
+        tradeOutDate,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="userId != null">
+        User_id,
+      </if>
+      <if test="requester != null">
+        requester,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeoutno != null">
+        #{tradeoutno,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeoutdate != null">
+        #{tradeoutdate,jdbcType=DATE},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="requester != null">
+        #{requester,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.core.pojo.TradeOut">
+    update tradeout
+    <set>
+      <if test="tradeoutno != null">
+        tradeOutNo = #{tradeoutno,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeoutdate != null">
+        tradeOutDate = #{tradeoutdate,jdbcType=DATE},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        User_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="requester != null">
+        requester = #{requester,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.core.pojo.TradeOut">
+    update tradeout
+    set tradeOutNo = #{tradeoutno,jdbcType=VARCHAR},
+      tradeOutDate = #{tradeoutdate,jdbcType=DATE},
+      remark = #{remark,jdbcType=VARCHAR},
+      User_id = #{userId,jdbcType=VARCHAR},
+      requester = #{requester,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.core.pojo.TradeOut">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="tradeOutNo" jdbcType="VARCHAR" property="tradeoutno" />
+    <result column="tradeDate" jdbcType="DATE" property="tradedate" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, tradeOutNo, tradeDate, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tradeout
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tradeout
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.core.pojo.TradeOut">
+    insert into tradeout (id, tradeOutNo, tradeDate, 
+      remark)
+    values (#{id,jdbcType=VARCHAR}, #{tradeoutno,jdbcType=VARCHAR}, #{tradedate,jdbcType=DATE}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.core.pojo.TradeOut">
+    insert into tradeout
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="tradeoutno != null">
+        tradeOutNo,
+      </if>
+      <if test="tradedate != null">
+        tradeDate,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeoutno != null">
+        #{tradeoutno,jdbcType=VARCHAR},
+      </if>
+      <if test="tradedate != null">
+        #{tradedate,jdbcType=DATE},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.core.pojo.TradeOut">
+    update tradeout
+    <set>
+      <if test="tradeoutno != null">
+        tradeOutNo = #{tradeoutno,jdbcType=VARCHAR},
+      </if>
+      <if test="tradedate != null">
+        tradeDate = #{tradedate,jdbcType=DATE},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.core.pojo.TradeOut">
+    update tradeout
+    set tradeOutNo = #{tradeoutno,jdbcType=VARCHAR},
+      tradeDate = #{tradedate,jdbcType=DATE},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.core.pojo.TradeOut">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="tradeOutNo" jdbcType="VARCHAR" property="tradeoutno" />
     <result column="tradeDate" jdbcType="DATE" property="tradedate" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
   </resultMap>

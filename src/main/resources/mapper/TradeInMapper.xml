@@ -4,6 +4,184 @@
   <resultMap id="BaseResultMap" type="com.core.pojo.TradeIn">
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="tradeInNo" jdbcType="VARCHAR" property="tradeinno" />
+    <result column="tradeInDate" jdbcType="INTEGER" property="tradeindate" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="User_id" jdbcType="VARCHAR" property="userId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, tradeInNo, tradeInDate, remark, User_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tradein
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tradein
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.core.pojo.TradeIn">
+    insert into tradein (id, tradeInNo, tradeInDate, 
+      remark, User_id)
+    values (#{id,jdbcType=VARCHAR}, #{tradeinno,jdbcType=VARCHAR}, #{tradeindate,jdbcType=INTEGER}, 
+      #{remark,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.core.pojo.TradeIn">
+    insert into tradein
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="tradeinno != null">
+        tradeInNo,
+      </if>
+      <if test="tradeindate != null">
+        tradeInDate,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="userId != null">
+        User_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeinno != null">
+        #{tradeinno,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeindate != null">
+        #{tradeindate,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.core.pojo.TradeIn">
+    update tradein
+    <set>
+      <if test="tradeinno != null">
+        tradeInNo = #{tradeinno,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeindate != null">
+        tradeInDate = #{tradeindate,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        User_id = #{userId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.core.pojo.TradeIn">
+    update tradein
+    set tradeInNo = #{tradeinno,jdbcType=VARCHAR},
+      tradeInDate = #{tradeindate,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      User_id = #{userId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.core.pojo.TradeIn">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="tradeInNo" jdbcType="VARCHAR" property="tradeinno" />
+    <result column="total" jdbcType="DECIMAL" property="total" />
+    <result column="tradeDate" jdbcType="DATE" property="tradedate" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, tradeInNo, total, tradeDate, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tradein
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tradein
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.core.pojo.TradeIn">
+    insert into tradein (id, tradeInNo, total, 
+      tradeDate, remark)
+    values (#{id,jdbcType=VARCHAR}, #{tradeinno,jdbcType=VARCHAR}, #{total,jdbcType=DECIMAL}, 
+      #{tradedate,jdbcType=DATE}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.core.pojo.TradeIn">
+    insert into tradein
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="tradeinno != null">
+        tradeInNo,
+      </if>
+      <if test="total != null">
+        total,
+      </if>
+      <if test="tradedate != null">
+        tradeDate,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeinno != null">
+        #{tradeinno,jdbcType=VARCHAR},
+      </if>
+      <if test="total != null">
+        #{total,jdbcType=DECIMAL},
+      </if>
+      <if test="tradedate != null">
+        #{tradedate,jdbcType=DATE},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.core.pojo.TradeIn">
+    update tradein
+    <set>
+      <if test="tradeinno != null">
+        tradeInNo = #{tradeinno,jdbcType=VARCHAR},
+      </if>
+      <if test="total != null">
+        total = #{total,jdbcType=DECIMAL},
+      </if>
+      <if test="tradedate != null">
+        tradeDate = #{tradedate,jdbcType=DATE},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.core.pojo.TradeIn">
+    update tradein
+    set tradeInNo = #{tradeinno,jdbcType=VARCHAR},
+      total = #{total,jdbcType=DECIMAL},
+      tradeDate = #{tradedate,jdbcType=DATE},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.core.pojo.TradeIn">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="tradeInNo" jdbcType="VARCHAR" property="tradeinno" />
     <result column="total" jdbcType="DECIMAL" property="total" />
     <result column="tradeDate" jdbcType="DATE" property="tradedate" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
