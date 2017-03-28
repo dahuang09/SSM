@@ -7,6 +7,8 @@ public class Category {
 
     private String categoryno;
 
+    private String remark;
+
     public String getId() {
         return id;
     }
@@ -29,5 +31,13 @@ public class Category {
 
     public void setCategoryno(String categoryno) {
         this.categoryno = categoryno == null ? null : categoryno.trim();
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
     }
 }

@@ -25,7 +25,8 @@
         new Ext.grid.RowNumberer(), //
         sm,
         {header: "商品类目编码", dataIndex: 'catgoryno',width:300,sortable:true},
-        {header: "类目名称", dataIndex: 'name',width:300,sortable:true}
+        {header: "类目名称", dataIndex: 'name',width:300,sortable:true},
+        {header: "备注", dataIndex: 'remark',width:300,sortable:true}
       ]);
     //var ds = new Ext.data.Store({
     var ds = new Ext.data.GroupingStore({
@@ -36,7 +37,8 @@
             successProperty: 'success'
       }, [
             {name: 'categoryno', mapping: 'categoryno', type: 'string'},
-            {name: 'name', mapping: 'name', type: 'string'}
+            {name: 'name', mapping: 'name', type: 'string'},
+            {name: 'remark', mapping: 'remark', type: 'string'}
         ]) ,
         pruneModifiedRecords:true,
         groupField:'categoryno',

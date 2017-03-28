@@ -18,8 +18,6 @@ public class OrderIn {
 
     private Date expireddate;
 
-    private Date datein;
-
     private String remark;
 
     private String orderinno;
@@ -27,8 +25,6 @@ public class OrderIn {
     private String itemId;
 
     private String tradeinId;
-
-    private String userId;
 
     private String vendorId;
 
@@ -90,14 +86,6 @@ public class OrderIn {
         this.expireddate = expireddate;
     }
 
-    public Date getDatein() {
-        return datein;
-    }
-
-    public void setDatein(Date datein) {
-        this.datein = datein;
-    }
-
     public String getRemark() {
         return remark;
     }
@@ -128,14 +116,6 @@ public class OrderIn {
 
     public void setTradeinId(String tradeinId) {
         this.tradeinId = tradeinId == null ? null : tradeinId.trim();
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId == null ? null : userId.trim();
     }
 
     public String getVendorId() {

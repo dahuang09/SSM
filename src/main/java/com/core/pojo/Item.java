@@ -1,5 +1,7 @@
 package com.core.pojo;
 
+import java.math.BigDecimal;
+
 public class Item {
     private String id;
 
@@ -12,6 +14,8 @@ public class Item {
     private String itemno;
 
     private String categoryId;
+
+    private BigDecimal price;
 
     public String getId() {
         return id;
@@ -59,5 +63,13 @@ public class Item {
 
     public void setCategoryId(String categoryId) {
         this.categoryId = categoryId == null ? null : categoryId.trim();
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 }

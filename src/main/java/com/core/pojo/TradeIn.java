@@ -1,18 +1,15 @@
 package com.core.pojo;
 
-import java.math.BigDecimal;
-import java.util.Date;
-
 public class TradeIn {
     private String id;
 
     private String tradeinno;
 
-    private BigDecimal total;
-
-    private Date tradedate;
+    private Integer tradeindate;
 
     private String remark;
+
+    private String userId;
 
     public String getId() {
         return id;
@@ -30,20 +27,12 @@ public class TradeIn {
         this.tradeinno = tradeinno == null ? null : tradeinno.trim();
     }
 
-    public BigDecimal getTotal() {
-        return total;
+    public Integer getTradeindate() {
+        return tradeindate;
     }
 
-    public void setTotal(BigDecimal total) {
-        this.total = total;
-    }
-
-    public Date getTradedate() {
-        return tradedate;
-    }
-
-    public void setTradedate(Date tradedate) {
-        this.tradedate = tradedate;
+    public void setTradeindate(Integer tradeindate) {
+        this.tradeindate = tradeindate;
     }
 
     public String getRemark() {
@@ -52,5 +41,13 @@ public class TradeIn {
 
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId == null ? null : userId.trim();
     }
 }

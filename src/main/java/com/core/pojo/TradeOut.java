@@ -7,9 +7,13 @@ public class TradeOut {
 
     private String tradeoutno;
 
-    private Date tradedate;
+    private Date tradeoutdate;
 
     private String remark;
+
+    private String userId;
+
+    private String requester;
 
     public String getId() {
         return id;
@@ -27,12 +31,12 @@ public class TradeOut {
         this.tradeoutno = tradeoutno == null ? null : tradeoutno.trim();
     }
 
-    public Date getTradedate() {
-        return tradedate;
+    public Date getTradeoutdate() {
+        return tradeoutdate;
     }
 
-    public void setTradedate(Date tradedate) {
-        this.tradedate = tradedate;
+    public void setTradeoutdate(Date tradeoutdate) {
+        this.tradeoutdate = tradeoutdate;
     }
 
     public String getRemark() {
@@ -41,5 +45,21 @@ public class TradeOut {
 
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId == null ? null : userId.trim();
+    }
+
+    public String getRequester() {
+        return requester;
+    }
+
+    public void setRequester(String requester) {
+        this.requester = requester == null ? null : requester.trim();
     }
 }

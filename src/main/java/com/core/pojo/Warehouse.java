@@ -7,7 +7,7 @@ public class Warehouse {
 
     private String remark;
 
-    private Integer isDeleted;
+    private Integer iddeleted;
 
     private String warehouseno;
 
@@ -35,12 +35,12 @@ public class Warehouse {
         this.remark = remark == null ? null : remark.trim();
     }
 
-    public Integer getIsDeleted() {
-        return isDeleted;
+    public Integer getIddeleted() {
+        return iddeleted;
     }
 
-    public void setIsDeleted(Integer isDeleted) {
-        this.isDeleted = isDeleted;
+    public void setIddeleted(Integer iddeleted) {
+        this.iddeleted = iddeleted;
     }
 
     public String getWarehouseno() {
