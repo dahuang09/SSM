@@ -7,13 +7,29 @@
     <result column="categoryNo" jdbcType="VARCHAR" property="categoryno" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, categoryNo
+    id, name, categoryno
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from category
     where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="listCategory" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from category
+    <where>
+    <if test="name != ''">
+    and name = #{name}
+    </if>
+    </where>
+    order by categoryno asc
+    limit #{start}, #{limit}
+      </select>
+  <select id="countCategory" resultType="java.lang.Integer">
+    select count(id)
+    from category
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from category

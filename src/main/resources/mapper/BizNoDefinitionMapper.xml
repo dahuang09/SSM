@@ -18,7 +18,7 @@
   </select>
   <select id="selectCurrentBizNo" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List" />
+    currentNo
     from biznodefinition
     where module = #{module,jdbcType=VARCHAR}
     and updatedon = CURDATE()
@@ -86,5 +86,15 @@
       updatedOn = #{updatedon,jdbcType=DATE},
       module = #{module,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="increaseBizNo" parameterType="java.lang.String">
+    update biznodefinition
+    set currentNO = currentNo+1
+    where module = #{module}
+  </update>
+  <update id="resetBizNo" parameterType="java.lang.String">
+    update biznodefinition
+    set currentNO = 1, updatedOn = CURDATE()
+    where module = #{module}
   </update>
 </mapper>

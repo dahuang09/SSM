@@ -10,10 +10,10 @@
         items:[
                {
                 region:'north',
-                height:65,
+                height:0,
                 layout : 'fit',
                 split : false,
-                collapsible:true,
+                collapsible:false,
                  html:'<iframe scrolling="auto" frameborder="0" width="100%" height="100%" src="common/top.jsp"></iframe>'
                },
                {region:'center',
@@ -347,7 +347,7 @@ var tree = new Ext.tree.TreePanel({
                             iconCls:'tabs',
                                 'title' : node.text,
                             closable : true,
-                            html : '<iframe id="Sub1" name="Sub" scrolling="auto" frameborder="0" width="100%" height="100%" src="common/sdeptlistandadd.jsp"></iframe>'
+                            html : '<iframe id="Sub1" name="Sub" scrolling="auto" frameborder="0" width="100%" height="100%" src="common/user.jsp"></iframe>'
 
 
                         });
@@ -362,7 +362,7 @@ var tree = new Ext.tree.TreePanel({
                     iconCls:'tabs',
                                 'title' : node.text,
                             closable : true,
-                            html : '<iframe id="Sub2" name="Sub" scrolling="auto" frameborder="0" width="100%" height="100%" src="common/user.jsp"></iframe>'
+                            html : '<iframe id="Sub2" name="Sub" scrolling="auto" frameborder="0" width="100%" height="100%" src="common/category.jsp"></iframe>'
                             });
             }
         }

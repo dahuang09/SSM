@@ -7,6 +7,9 @@
 // ============================================================================
 package com.core.service;
 
+import java.util.List;
+import java.util.Map;
+
 import com.core.exception.ServiceException;
 import com.core.pojo.User;
 
@@ -16,5 +19,7 @@ import com.core.pojo.User;
  */
 public interface IUserService {
     public User getUserById(String userId) throws ServiceException;
-    public String addUser(User user) throws ServiceException;
+    public String addUser(User user) throws Throwable;
+    Map<String, ?> listUser(String userName, int start, int limit);
+    List<User> searchUser() throws ServiceException;
 }

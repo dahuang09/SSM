@@ -63,8 +63,8 @@
         <property name="dataSource" ref="dataSource" />
     </bean>
 
-    <bean id="bizNoGenerator" class="com.core.util.BizNoGenerator">
+    <!-- <bean id="bizNoUtil" class="com.core.util.BizNoUtil">
       <property name="sqlSessionFactory" ref="sqlSessionFactory" />
-    </bean>
+    </bean> -->
 
 </beans>

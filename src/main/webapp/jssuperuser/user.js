@@ -24,33 +24,34 @@
     var cm = new Ext.grid.ColumnModel([
         new Ext.grid.RowNumberer(), //
         sm,
-        {header: "<span style='font-weight:bold;font-size:15px;'>&nbsp;&nbsp;&nbsp;&nbsp;用户名</span>", dataIndex: 'username',width:300,sortable:true,renderer:renderusername},
-        {header: "密码", dataIndex: 'password',width:300,sortable:true,editor:new Ext.grid.GridEditor(field)},
-        {header: "负责区", id:'regionname',dataIndex: 'regionname',width:300,sortable:true,editor:new Ext.grid.GridEditor(regioncombo)}
+        {header: "用户编码", dataIndex: 'userno',width:300,sortable:true,renderer:renderusername},
+        {header: "用户名", dataIndex: 'username',width:300,sortable:true,renderer:renderusername},
+        {header: "密码", dataIndex: 'password',width:300,sortable:true,editor:new Ext.grid.GridEditor(passwordField)},
+        {header: "超鸡管理员", id:'isadmin',dataIndex: 'isadmin',width:300,sortable:true}
     ]);
     //var ds = new Ext.data.Store({
     var ds = new Ext.data.GroupingStore({
-        proxy: new Ext.data.HttpProxy({url: 'adminlist.action'}),
+        proxy: new Ext.data.HttpProxy({url: 'user/listUser'}),
         reader: new Ext.data.JsonReader({
             totalProperty: 'total',
-            root: 'adminlist',
+            root: 'userlist',
             successProperty: 'success'
       }, [
             {name: 'username', mapping: 'username', type: 'string'},
             {name: 'password', mapping: 'password', type: 'string'},
-            {name: 'regionname', mapping: 'region.regionname', type: 'string'}
+            {name: 'userno', mapping: 'userno', type: 'string'},
+            {name: 'isadmin', mapping: 'isadmin', type: 'string'}
         ]) ,
-        pruneModifiedRecords:true,//每次进行remove或load操作时store会自动modified标记，避免出现下次提交时会把上次那些modified信息都带上
-        //分组表格
-        //groupField:'regionname',
-        sortInfo:{field:'regionname',direction:"ASC"}
+        pruneModifiedRecords:true,
+        groupField:'isadmin',
+        sortInfo:{field:'userno',direction:"ASC"}
     });
 
 
     //var grid = new Ext.grid.GridPanel({
     var grid = new Ext.grid.EditorGridPanel({
         region : 'center',
-        id:'admingrid',
+        id:'userGrid',
         //el:'adminlist',
         ds: ds,   //数据源
         sm: sm,   //每行数据前面的复选框
@@ -60,7 +61,7 @@
         stripeRows:true,//数据行间隔的底色
         loadMask : {msg : '数据加载中...'},
         //loadMask:true,//读取数据时的遮罩和提示功能
-        autoExpandColumn:'regionname',
+//        autoExpandColumn:'regionname',
         viewConfig:{
             forceFit:true//自动调节每列的宽度使其填满表格
         },
@@ -97,7 +98,7 @@
                     icon : 'ext/imgs/del.gif',
                     handler: function(btn, pressed)
                     {
-                           var rows=Ext.getCmp("admingrid").getSelectionModel().getSelections();    //获取选中的行
+                           var rows=Ext.getCmp("userGrid").getSelectionModel().getSelections();    //获取选中的行
                             if(rows.length==0)
                             {
                                 Ext.Msg.alert("提示信息","请您至少选择一个!");
@@ -135,7 +136,7 @@
                                             url:'deleteadmin.action',
                                          success:function(){
                                              Ext.Msg.alert('成功','删除用户成功',function(){
-                                             var grid = Ext.getCmp('admingrid');
+                                             var grid = Ext.getCmp('userGrid');
                                             var ds = grid.getStore();
                                             ds.remove(rows);});
                                          },failure:function(){
@@ -180,8 +181,8 @@
             minListWidth:250,
             pageSize:5,
             store: new Ext.data.JsonStore({
-                url: 'adminlist1.action',
-                root:'adminlist',
+                url: 'user/searchUser',
+                root:'userlist',
                 totalProperty: 'total',
                 remoteSort: true,
                 fields:['username']
@@ -213,7 +214,7 @@
       labelWidth:60,
       labelAlign:'right',
       frame:true,
-      items:[field1,field2],
+      items:[userNameField,passwordField,isAdminField],
 
       buttons:[{
         text:'提交',
@@ -251,12 +252,9 @@
                     params:"",
                     // 第一个参数是传入该表单，第二个是Ext.form.Action对象用来取得服务器端传过来的json数据
                       success:function(form,action){
-//                          Ext.Msg.alert('信息','成功啦！！！, 大家我一起唱：呀呀呀呀呀呀~~~~');
                           Ext.Msg.alert('信息', action.result.message,function(){
-                              Ext.getCmp('admingrid').getStore().reload();
+                              Ext.getCmp('userGrid').getStore().reload();
                           });
-                          //Ext.getCmp('admingrid').getStore().reload();
-                          //ds.reload();
                       },
                       failure:function(form,action){
                           if(action.failureType == Ext.form.Action.SERVER_INVALID){
@@ -293,18 +291,6 @@
     });
 
 });
-
-
-
-    var field = new Ext.form.TextField({
-        fieldLabel:'密&nbsp;&nbsp;&nbsp;&nbsp;码',
-          name:'password',
-          allowBlank:false,
-          emptyText:'空',
-          vtype:'alphanum',
-          vtypeText:'只能输入字母和数字',
-          msgTarget:'side'
-    });
 
    var regioncombo = new Ext.form.ComboBox({
             id:'regioncomboid',
@@ -351,7 +337,7 @@
          if(username2.length<=0 || username2.length == ''){
              Ext.Msg.alert('提示','请选择一个你要查询的用户名');
          }else{
-                 Ext.getCmp('admingrid').getStore().load();
+                 Ext.getCmp('userGrid').getStore().load();
                    //Ext.getCmp('admingrid').getStore().reload({params:{start : 0,limit : 10,username:username2}});
          }
      }
@@ -359,9 +345,9 @@
      /**
       * 表单样式
       */
-     var field1 = new Ext.form.TextField({
+     var userNameField = new Ext.form.TextField({
       fieldLabel:'用户名',
-      name:'name',
+      name:'username',
       allowBlank:false,
       emptyText:'空',
       vtype:'alphanum',
@@ -370,14 +356,25 @@
     });
 
 
-    var field2 = new Ext.form.TextField({
-        fieldLabel:'姓&nbsp;&nbsp;&nbsp;&nbsp;',
-          name:'lastName',
+    var passwordField = new Ext.form.TextField({
+        fieldLabel:'密&nbsp;&nbsp;&nbsp;&nbsp;码',
+          name:'password',
           allowBlank:false,
           emptyText:'空',
           vtype:'alphanum',
           vtypeText:'只能输入字母和数字',
           msgTarget:'side'
+    });
+
+    var isAdminField = new Ext.form.RadioGroup({
+        fieldLabel: '超级管理员',
+        anchor: '50%',
+        columns: 2,
+        vertical: true,
+        items: [
+            { boxLabel: '是', name: 'isadmin', inputValue: '1', checked: true },
+            { boxLabel: '否', name: 'isadmin', inputValue: '0' }
+        ]
     });
 
     var regioncombo2 = new Ext.form.ComboBox({

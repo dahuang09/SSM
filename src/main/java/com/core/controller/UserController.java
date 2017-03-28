@@ -12,6 +12,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -21,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.core.exception.ServiceException;
 import com.core.pojo.User;
 import com.core.service.IUserService;
 
@@ -53,15 +53,45 @@ public class UserController {
 
     @RequestMapping(value="/add", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object>  addUser(@RequestBody final User user){
+    public Map<String, Object> addUser(@RequestBody final User user){
         final Map<String, Object> map = new HashMap<String, Object>();
         try {
             final String userNo = userService.addUser(user);
-            map.put("success", "ture");
+            map.put("success", true);
             map.put("bizNo", userNo);
-        } catch (final ServiceException e) {
-            throw e;
+        } catch (final Throwable e) {
+            logger.error("添加用户失败", e);
         }
+        return map;
+    }
+
+    @RequestMapping(path="/listUser", method=RequestMethod.POST)
+    public Map<String, Object> listUser(@RequestBody final Map<String, Object> parameters){
+        final Object userNameObj = parameters.get("username");
+        final Object startObj = parameters.get("start");
+        final Object limitObj =  parameters.get("limit");
+        final String userName = ObjectUtils.toString(userNameObj);
+        final int start = Integer.parseInt(ObjectUtils.toString(startObj));
+        final int limit = Integer.parseInt(ObjectUtils.toString(limitObj));
+        final Map<String, Object> map = new HashMap<String, Object>();
+        final Map<String, ?> returnMap = userService.listUser(userName, start, limit);
+        map.put("userlist", returnMap.get("usreList"));
+        map.put("total", returnMap.get("total"));
+        map.put("success", true);
+        return map;
+    }
+
+    @RequestMapping(path="/searchUser", method=RequestMethod.POST)
+    public Map<String, Object> searchUser(@RequestBody final Map<String, Object> parameters){
+        final Object startObj = parameters.get("start");
+        final Object limitObj =  parameters.get("limit");
+        final int start = Integer.parseInt(ObjectUtils.toString(startObj));
+        final int limit = Integer.parseInt(ObjectUtils.toString(limitObj));
+        final Map<String, Object> map = new HashMap<String, Object>();
+        final Map<String, ?> returnMap = userService.listUser("", start, limit);
+        map.put("userlist", returnMap.get("usreList"));
+        map.put("total", returnMap.get("total"));
+        map.put("success", true);
         return map;
     }
 }

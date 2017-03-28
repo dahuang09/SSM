@@ -18,6 +18,28 @@
     from user
     where id = #{id,jdbcType=VARCHAR}
   </select>
+  <select id="listUser" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where isdeleted = 0
+    <if test="username != ''">
+    and username = #{username}
+    </if>
+    order by isadmin asc
+    limit #{start}, #{limit}
+      </select>
+  <select id="countUser" resultType="java.lang.Integer">
+    select count(id)
+    from user
+    where isdeleted=0
+  </select>
+  <select id="searchUser" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where isdeleted = 0 limit #{offset}, #{rows};
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from user
     where id = #{id,jdbcType=VARCHAR}
@@ -103,15 +125,4 @@
       userNo = #{userno,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <resultMap id="BaseResultMap" type="com.core.pojo.User">
-    <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="userName" jdbcType="VARCHAR" property="username" />
-    <result column="Password" jdbcType="VARCHAR" property="password" />
-    <result column="isDeleted" jdbcType="INTEGER" property="isdeleted" />
-    <result column="isAdmin" jdbcType="INTEGER" property="isadmin" />
-    <result column="userNo" jdbcType="VARCHAR" property="userno" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, userName, Password, isDeleted, isAdmin, userNo
-  </sql>
 </mapper>

@@ -24,15 +24,15 @@ public class OrderIn {
 
     private String orderinno;
 
-    private String vendorId;
-
     private String itemId;
 
-    private String warehouseId;
+    private String tradeinId;
 
     private String userId;
 
-    private String tradeinId;
+    private String vendorId;
+
+    private String warehouseId;
 
     public String getId() {
         return id;
@@ -114,14 +114,6 @@ public class OrderIn {
         this.orderinno = orderinno == null ? null : orderinno.trim();
     }
 
-    public String getVendorId() {
-        return vendorId;
-    }
-
-    public void setVendorId(String vendorId) {
-        this.vendorId = vendorId == null ? null : vendorId.trim();
-    }
-
     public String getItemId() {
         return itemId;
     }
@@ -130,12 +122,12 @@ public class OrderIn {
         this.itemId = itemId == null ? null : itemId.trim();
     }
 
-    public String getWarehouseId() {
-        return warehouseId;
+    public String getTradeinId() {
+        return tradeinId;
     }
 
-    public void setWarehouseId(String warehouseId) {
-        this.warehouseId = warehouseId == null ? null : warehouseId.trim();
+    public void setTradeinId(String tradeinId) {
+        this.tradeinId = tradeinId == null ? null : tradeinId.trim();
     }
 
     public String getUserId() {
@@ -146,11 +138,19 @@ public class OrderIn {
         this.userId = userId == null ? null : userId.trim();
     }
 
-    public String getTradeinId() {
-        return tradeinId;
+    public String getVendorId() {
+        return vendorId;
     }
 
-    public void setTradeinId(String tradeinId) {
-        this.tradeinId = tradeinId == null ? null : tradeinId.trim();
+    public void setVendorId(String vendorId) {
+        this.vendorId = vendorId == null ? null : vendorId.trim();
+    }
+
+    public String getWarehouseId() {
+        return warehouseId;
+    }
+
+    public void setWarehouseId(String warehouseId) {
+        this.warehouseId = warehouseId == null ? null : warehouseId.trim();
     }
 }

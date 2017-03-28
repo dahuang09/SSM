@@ -1,7 +1,5 @@
 package com.core.dao;
 
-import java.util.Map;
-
 import com.core.pojo.BizNoDefinition;
 
 public interface BizNoDefinitionMapper {
@@ -17,7 +15,9 @@ public interface BizNoDefinitionMapper {
 
     int updateByPrimaryKey(BizNoDefinition record);
 
-    int selectCurrentBizNo(String module);
+    BizNoDefinition selectCurrentBizNo(String module);
 
-    void updateBizNo(Map<String, Object> parameters);
+    void increaseBizNo(String module);
+
+    void resetBizNo(String module);
 }

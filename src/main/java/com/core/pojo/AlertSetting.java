@@ -7,8 +7,6 @@ public class AlertSetting {
 
     private String remark;
 
-    private String itemId;
-
     private String message;
 
     private Integer alertamount;
@@ -18,6 +16,8 @@ public class AlertSetting {
     private Integer enabled;
 
     private String alertsettingcol;
+
+    private String itemId;
 
     public String getId() {
         return id;
@@ -41,14 +41,6 @@ public class AlertSetting {
 
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
-    }
-
-    public String getItemId() {
-        return itemId;
-    }
-
-    public void setItemId(String itemId) {
-        this.itemId = itemId == null ? null : itemId.trim();
     }
 
     public String getMessage() {
@@ -89,5 +81,13 @@ public class AlertSetting {
 
     public void setAlertsettingcol(String alertsettingcol) {
         this.alertsettingcol = alertsettingcol == null ? null : alertsettingcol.trim();
+    }
+
+    public String getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(String itemId) {
+        this.itemId = itemId == null ? null : itemId.trim();
     }
 }
