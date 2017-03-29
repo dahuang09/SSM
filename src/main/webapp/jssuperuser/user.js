@@ -376,36 +376,3 @@
             { boxLabel: '否', name: 'isadmin', inputValue: '0' }
         ]
     });
-
-    var regioncombo2 = new Ext.form.ComboBox({
-            id:'regioncomboid2',
-            fieldLabel:'区名',
-            hiddenName: 'regionid',
-            valueField: 'regionid',
-            displayField: 'regionname',
-            editable: false,
-            //editable: false,
-             emptyText:'请选择区名',
-            allowBlank : true,
-            blankText    :'请选择区名',
-            //msgTarget :'qtip',
-            triggerAction: 'all',
-            width: 150,
-            mode: 'remote',
-            minListWidth:250,
-            pageSize:5,
-            store: new Ext.data.JsonStore({
-                url: 'regionlist1.action',
-                root:'regionlist',
-                totalProperty: 'total',
-                remoteSort: true,
-                fields:['regionid', 'regionname']
-            })
-     });
-
-
-
-
-
-
-

@@ -18,16 +18,16 @@
 
    //表格
    Ext.QuickTips.init();
-   var name = null;
+   var categoryName2 = null;
 
     var sm = new Ext.grid.CheckboxSelectionModel({handleMouseDown:Ext.emptyFn()}); // CheckBox
     var cm = new Ext.grid.ColumnModel([
         new Ext.grid.RowNumberer(), //
         sm,
-        {header: "商品类目编码", dataIndex: 'catgoryno',width:300,sortable:true},
-        {header: "类目名称", dataIndex: 'name',width:300,sortable:true},
+        {header: "类目编号", dataIndex: 'categoryno',width:300,sortable:true,renderer:renderusername},
+        {header: "类目名称", dataIndex: 'name',width:300,sortable:true,renderer:renderusername},
         {header: "备注", dataIndex: 'remark',width:300,sortable:true}
-      ]);
+    ]);
     //var ds = new Ext.data.Store({
     var ds = new Ext.data.GroupingStore({
         proxy: new Ext.data.HttpProxy({url: 'category/listCategory'}),
@@ -50,6 +50,7 @@
     var grid = new Ext.grid.EditorGridPanel({
         region : 'center',
         id:'categoryGrid',
+        //el:'adminlist',
         ds: ds,   //数据源
         sm: sm,   //每行数据前面的复选框
         cm: cm,   //表格上的列
@@ -95,7 +96,7 @@
                     icon : 'ext/imgs/del.gif',
                     handler: function(btn, pressed)
                     {
-                           var rows=Ext.getCmp("categoryGrid").getSelectionModel().getSelections();    //获取选中的行
+                           var rows=Ext.getCmp("userGrid").getSelectionModel().getSelections();    //获取选中的行
                             if(rows.length==0)
                             {
                                 Ext.Msg.alert("提示信息","请您至少选择一个!");
@@ -123,6 +124,7 @@
                                               for(var i = 1; i < 13; i++) {
                                                 setTimeout(f(i), i * 70);
                                                }
+                                        //var br = Ext.getCmp("roomgrid").getSelectionModel().getSelected().data;
                                         var jsonArray = [];
                                         var len = rows.length;
                                          for(var i = 0;i<len;i++){
@@ -132,7 +134,7 @@
                                             url:'deleteadmin.action',
                                          success:function(){
                                              Ext.Msg.alert('成功','删除用户成功',function(){
-                                             var grid = Ext.getCmp('categoryGrid');
+                                             var grid = Ext.getCmp('userGrid');
                                             var ds = grid.getStore();
                                             ds.remove(rows);});
                                          },failure:function(){
@@ -167,7 +169,7 @@
             valueField: 'name',
             displayField: 'name',
             editable: true,
-             emptyText:'类目名',
+             emptyText:'请选择类目名',
             //allowBlank : false,
             //blankText    :'请选择区名',
             //msgTarget :'qtip',
@@ -187,13 +189,12 @@
         })
     });
 
-    ds.load({params: {start: 0, limit:27,name:name}});
+    ds.load({params: {start: 0, limit:27,name:categoryName2}});
 
     ds.on('beforeload', function() {
-        var name = Ext.getCmp('comboid').getRawValue();
-         this.baseParams = {start:0,limit:27,name:name};
+        var categoryName2 = Ext.getCmp('comboid').getRawValue();
+         this.baseParams = {start:0,limit:27,name:categoryName2};
     });
-    //ds.load(/*{params: {start: 0, limit:27}}*/);
 
     //表单
     var form1 = new Ext.form.FormPanel({
@@ -208,7 +209,7 @@
       labelWidth:60,
       labelAlign:'right',
       frame:true,
-      items:[categorynameField],
+      items:[categorynameField,remarkField],
 
       buttons:[{
         text:'提交',
@@ -274,7 +275,6 @@
 
 
    var adminpanel = new Ext.Panel({
-       //renderTo: 'iframepanel',
        layout:'border',
        items:[grid,form1]
    });
@@ -285,6 +285,12 @@
     });
 
 });
+
+function renderusername(value){
+    var catgoryno = value;
+    return "<span style='color:#FF3333;font-weight:bold;'>"+catgoryno+"</span>";
+
+}
 
        //查询
       function searchadmin(){
@@ -305,8 +311,16 @@
       name:'name',
       allowBlank:false,
       emptyText:'空',
-      vtype:'alphanum',
-      vtypeText:'只能输入字母和数字',
+      msgTarget:'side'
+    });
+
+     /**
+      * 表单样式
+      */
+     var remarkField = new Ext.form.TextArea({
+      fieldLabel:'备注',
+      name:'remark',
+      width: 200,
       msgTarget:'side'
     });
 

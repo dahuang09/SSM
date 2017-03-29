@@ -366,14 +366,14 @@ var tree = new Ext.tree.TreePanel({
                             });
             }
         }
-            if (nodeId == 31) {
+            if (nodeId == 3) {
                 if (!n) {
                     n = contentPanel.add( {
                                 'id' : node.id,
                                 iconCls:'tabs',
                                     'title' : node.text,
                                 closable : true,
-                                html : '<iframe name="Sub" scrolling="auto" frameborder="0" width="100%" height="100%" src="superuser/regionlistandadd.jsp"></iframe>'
+                                html : '<iframe name="Sub" scrolling="auto" frameborder="0" width="100%" height="100%" src="common/item.jsp"></iframe>'
                                 //html : '<iframe scrolling="no" frameborder="0" width="100%" height="575" src="superuser/regionlist.jsp"></iframe>'
                             });
                 }
