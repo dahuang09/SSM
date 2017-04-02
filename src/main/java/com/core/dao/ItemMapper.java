@@ -1,5 +1,9 @@
 package com.core.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.core.pojo.Item;
 
 public interface ItemMapper {
@@ -11,7 +15,24 @@ public interface ItemMapper {
 
     Item selectByPrimaryKey(String id);
 
+    String selectIdByItemNo(String itemNo);
+
     int updateByPrimaryKeySelective(Item record);
 
     int updateByPrimaryKey(Item record);
+
+    int countItem();
+
+    void increaseItemActualStock(@Param(value="itemNo")String itemNo, @Param(value="actualStock") int actualStock);
+
+    void reduceItemActualStock(@Param(value="itemNo")String itemNo, @Param(value="actualStock") int actualStock);
+
+    int countItemByCategoryNo(String categoryno);
+
+    List<Item> listItem(@Param(value = "name") String name, @Param(value = "start") int start,
+            @Param(value = "limit") int limit);
+
+    List<Item> listItemInCategory(@Param(value = "categoryno") String name);
+
+    List<Item> listAvailableItem(@Param(value = "categoryno") String name);
 }

@@ -1,5 +1,9 @@
 package com.core.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.core.pojo.OrderOut;
 
 public interface OrderOutMapper {
@@ -14,4 +18,9 @@ public interface OrderOutMapper {
     int updateByPrimaryKeySelective(OrderOut record);
 
     int updateByPrimaryKey(OrderOut record);
+
+    int countOrderOut();
+
+    List<OrderOut> listOrderOut(@Param(value = "name") String name, @Param(value = "start") int start,
+            @Param(value = "limit") int limit);
 }

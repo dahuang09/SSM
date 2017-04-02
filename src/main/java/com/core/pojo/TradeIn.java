@@ -1,11 +1,13 @@
 package com.core.pojo;
 
+import java.util.Date;
+
 public class TradeIn {
     private String id;
 
     private String tradeinno;
 
-    private Integer tradeindate;
+    private Date tradeindate;
 
     private String remark;
 
@@ -15,7 +17,7 @@ public class TradeIn {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(final String id) {
         this.id = id == null ? null : id.trim();
     }
 
@@ -23,15 +25,15 @@ public class TradeIn {
         return tradeinno;
     }
 
-    public void setTradeinno(String tradeinno) {
+    public void setTradeinno(final String tradeinno) {
         this.tradeinno = tradeinno == null ? null : tradeinno.trim();
     }
 
-    public Integer getTradeindate() {
+    public Date getTradeindate() {
         return tradeindate;
     }
 
-    public void setTradeindate(Integer tradeindate) {
+    public void setTradeindate(final Date tradeindate) {
         this.tradeindate = tradeindate;
     }
 
@@ -39,7 +41,7 @@ public class TradeIn {
         return remark;
     }
 
-    public void setRemark(String remark) {
+    public void setRemark(final String remark) {
         this.remark = remark == null ? null : remark.trim();
     }
 
@@ -47,7 +49,7 @@ public class TradeIn {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(final String userId) {
         this.userId = userId == null ? null : userId.trim();
     }
 }

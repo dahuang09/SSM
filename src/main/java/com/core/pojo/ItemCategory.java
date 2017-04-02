@@ -2,10 +2,7 @@ package com.core.pojo;
 
 import java.math.BigDecimal;
 
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
-
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class Item {
+public class ItemCategory {
     private String id;
 
     private String itemname;
@@ -20,23 +17,9 @@ public class Item {
 
     private BigDecimal price;
 
+    private String categoryName;
+
     private Category category;
-
-    private String categoryno;
-
-    /**
-     * @return the categoryno
-     */
-    public String getCategoryno() {
-        return categoryno;
-    }
-
-    /**
-     * @param categoryno the categoryno to set
-     */
-    public void setCategoryno(final String categoryno) {
-        this.categoryno = categoryno;
-    }
 
     /**
      * @return the category
@@ -52,6 +35,19 @@ public class Item {
         this.category = category;
     }
 
+    /**
+     * @return the categoryName
+     */
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    /**
+     * @param categoryName the categoryName to set
+     */
+    public void setCategoryName(final String categoryName) {
+        this.categoryName = categoryName;
+    }
 
     public String getId() {
         return id;

@@ -3,63 +3,53 @@
                 leaf:true,
                 id:'1'
         },{
+            text:'仓库',
+                leaf:true,
+                id:'2'
+        },{
+            text:'供应商',
+                leaf:true,
+                id:'3'
+        },{
             text : '商品信息',
             children : [{
                         text : '商品类目',
                         leaf : true,
-                        id : '2'
+                        id : '4'
                     },{
                         text : '商品',
                         leaf : true,
-                        id : '3'
+                        id : '5'
                     }]
         },{
-            text:'xxx',
-            //id:'2',
-            children : [
-                                    {
-                                            text : '  xxx  ',
-                                            leaf : true,
-                                            id : '31'
-
-                        }, {
-
-                                            text : '  xxx ',
-                                            leaf : true,
-                                            id : '32'
-
-                        }, {
-                                            text : '  xxx  ',
-                                            leaf : true,
-                                            id : '33'
-                        }]
+            text : '库存管理',
+            children : [{
+                        text : '入库',
+                        leaf : true,
+                        id : '6'
+                    },{
+                        text : '出库',
+                        leaf : true,
+                        id : '7'
+                    }]
+        },{
+            text:'退货',
+            leaf:true,
+            id:'8'
+        },{
+            text:'预警',
+            leaf:true,
+            id:'9'
         },{
             text:'统计',
-            //id:'7',
             children : [
                         {
-                            text : '  sss  ',
-                            //id : '71',
-                            children : [{
-                                text:'xxxx',
-                                id:'41',
-                                leaf:true
-                            },{
-                                text:'xxxx',
-                                    id:'42',
-                                    leaf:true
-                            }]
+                            text : '按供应商统计',
+                            id : '10',
+                            leaf:true
                         }, {
-                            text : '  xxxx  ',
-                            //id : '72',
-                            children : [{
-                                text:'aaa',
-                                id:'51',
-                                leaf:true
-                            },{
-                                text:'eeee',
-                                    id:'52',
-                                    leaf:true
-                            }]
+                            text : '按商品统计',
+                            id : '11',
+                            leaf:true
                         }]
         }]

@@ -14,7 +14,7 @@
                 layout : 'fit',
                 split : false,
                 collapsible:false,
-                 html:'<iframe scrolling="auto" frameborder="0" width="100%" height="100%" src="common/top.jsp"></iframe>'
+                 html:'<iframe scrolling="auto" frameborder="0" width="100%" height="100%" src=""></iframe>'
                },
                {region:'center',
                layout : 'fit',
@@ -340,7 +340,7 @@ var tree = new Ext.tree.TreePanel({
         var nodeId = node.id;
         var n = contentPanel.getComponent(node.id);
 
-        if (nodeId == 1) {
+        if (nodeId ==1) {
             if (!n) {
                 n = contentPanel.add( {
                             'id' : node.id,
@@ -354,7 +354,7 @@ var tree = new Ext.tree.TreePanel({
             }
         }
 
-        if (nodeId == 2) {
+        if (nodeId == 4) {
             if (!n) {
                 n = contentPanel.add({
                     //region:'center',
@@ -366,7 +366,7 @@ var tree = new Ext.tree.TreePanel({
                             });
             }
         }
-            if (nodeId == 3) {
+            if (nodeId == 5) {
                 if (!n) {
                     n = contentPanel.add( {
                                 'id' : node.id,
@@ -378,26 +378,26 @@ var tree = new Ext.tree.TreePanel({
                             });
                 }
             }
-            if (nodeId == 32) {
+            if (nodeId == 6) {
                 if (!n) {
                     n = contentPanel.add( {
                                 'id' : node.id,
                                 iconCls:'tabs',
                                     'title' : node.text,
                                 closable : true,
-                                html : '<iframe name="Sub" scrolling="auto" frameborder="0" width="100%" height="100%" src="superuser/flatlistandadd.jsp"></iframe>'
+                                html : '<iframe name="Sub" scrolling="auto" frameborder="0" width="100%" height="100%" src="common/orderIn.jsp"></iframe>'
                             });
                 }
             }
 
-            if (nodeId == 33) {
+            if (nodeId == 7) {
                 if (!n) {
                     n = contentPanel.add( {
                                 'id' : node.id,
                                 iconCls:'tabs',
                                     'title' : node.text,
                                 closable : true,
-                                html : '<iframe name="Sub" scrolling="auto" frameborder="0" width="100%" height="100%" src="superuser/roomlistandadd.jsp"></iframe>'
+                                html : '<iframe name="Sub" scrolling="auto" frameborder="0" width="100%" height="100%" src="common/orderOut.jsp"></iframe>'
                             });
                 }
             }

@@ -16,7 +16,7 @@
     select
     <include refid="Base_Column_List" />
     from user
-    where id = #{id,jdbcType=VARCHAR}
+    where username = #{username,jdbcType=VARCHAR}
   </select>
   <select id="listUser" parameterType="java.util.Map" resultMap="BaseResultMap">
     select

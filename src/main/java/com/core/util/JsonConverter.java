@@ -60,17 +60,18 @@ public class JsonConverter implements HttpMessageConverter<Object> {
     /* (non-Javadoc)
      * @see org.springframework.http.converter.HttpMessageConverter#read(java.lang.Class, org.springframework.http.HttpInputMessage)
      */
+    @SuppressWarnings("unchecked")
     public Object read(final Class<? extends Object> clazz, final HttpInputMessage inputMessage) throws IOException,
             HttpMessageNotReadableException {
         @SuppressWarnings("rawtypes")
         final Map input = formHttpMessageConverter.read(LINKED_MULTI_VALUE_MAP_CLASS, inputMessage).toSingleValueMap();
-//        final String jsonParamKey="jsonParam";
-//        if(input.containsKey(jsonParamKey)) {
+        final String jsonParamKey="jsonParam";
+        if(input.containsKey(jsonParamKey)) {
 //            final String jsonParam = input.get(jsonParamKey).toString();
 //            final SearchParamInfo<Object> searchParamInfo = new SearchParamInfo<Object>();
-            //final Object jsonParamObj = JsonHelper.json2Object(jsonParam, searchParamInfo.getClass());
+//            final Object jsonParamObj = JsonHelper.json2Object(jsonParam, searchParamInfo.getClass());
 //            input.put("jsonParam", jsonParamObj);
-//        }
+        }
         final Object objResult= objectMapper.convertValue(input, clazz);
         return objResult;
     }

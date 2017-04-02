@@ -7,27 +7,124 @@
     <result column="safetyStock" jdbcType="INTEGER" property="safetystock" />
     <result column="actualStock" jdbcType="INTEGER" property="actualstock" />
     <result column="itemNo" jdbcType="VARCHAR" property="itemno" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
     <result column="Category_id" jdbcType="VARCHAR" property="categoryId" />
   </resultMap>
+
+  <resultMap id="ItemCategoryResult" type="Item">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="itemName" jdbcType="VARCHAR" property="itemname" />
+    <result column="safetyStock" jdbcType="INTEGER" property="safetystock" />
+    <result column="actualStock" jdbcType="INTEGER" property="actualstock" />
+    <result column="itemNo" jdbcType="VARCHAR" property="itemno" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="Category_id" jdbcType="VARCHAR" property="categoryId" />
+    <association property="category" javaType="Category">
+        <id property="id" column="categoryId"/>
+        <result property="name" column="categoryName"/>
+     </association>
+  </resultMap>
+
   <sql id="Base_Column_List">
-    id, itemName, safetyStock, actualStock, itemNo, Category_id
+    id, itemName, safetyStock, actualStock, itemNo, price, Category_id
   </sql>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from item
     where id = #{id,jdbcType=VARCHAR}
   </select>
+
+  <select id="selectIdByItemNo" parameterType="java.lang.String" resultType="java.lang.String">
+    select id
+    from item
+    where itemno = #{itemno}
+  </select>
+
+  <select id="listItem" parameterType="java.util.Map" resultMap="ItemCategoryResult">
+  <bind name="pattern" value="'%' + name + '%'"/>
+    select
+    it.id as "id",
+    it.itemName as "itemname",
+    it.safetyStock as "safetystock",
+    it.actualStock as "actualstock",
+    it.itemNo as "itemno",
+    it.price as "price",
+    cy.id as "categoryId",
+    cy.name as "categoryName"
+    from item it
+    inner join category cy on cy.id = it.category_id
+    <where>
+    <if test="name != ''">
+    and itemname like #{pattern}
+    </if>
+    </where>
+    order by itemno asc
+    limit #{start}, #{limit}
+   </select>
+
+  <select id="countItem" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(it.id)
+    from item it
+    inner join category cy on cy.id = it.category_id
+    <where>
+    cy.categoryno = #{categoryno}
+    </where>
+  </select>
+
+  <select id="listItemInCategory" parameterType="java.util.Map" resultMap="ItemCategoryResult">
+    select
+    it.id as "id",
+    it.itemName as "itemname",
+    it.safetyStock as "safetystock",
+    it.actualStock as "actualstock",
+    it.itemNo as "itemno",
+    it.price as "price",
+    cy.id as "categoryId",
+    cy.name as "categoryName"
+    from item it
+    inner join category cy on cy.id = it.category_id
+    <where>
+    cy.categoryno = #{categoryno}
+    </where>
+    order by itemno asc
+   </select>
+
+   <select id="listAvailableItem" parameterType="java.util.Map" resultMap="ItemCategoryResult">
+    select
+    it.id as "id",
+    it.itemName as "itemname",
+    it.safetyStock as "safetystock",
+    it.actualStock as "actualstock",
+    it.itemNo as "itemno",
+    it.price as "price",
+    cy.id as "categoryId",
+    cy.name as "categoryName"
+    from item it
+    inner join category cy on cy.id = it.category_id
+    <where>
+    cy.categoryno = #{categoryno}
+    and it.actualStock != 0
+    </where>
+    order by itemno asc
+   </select>
+
+  <select id="countItemByCategoryNo" resultType="java.lang.Integer">
+    select count(id)
+    from item
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from item
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.core.pojo.Item">
-    insert into item (id, itemName, safetyStock, 
-      actualStock, itemNo, Category_id
+    insert into item (id, itemName, safetyStock,
+      actualStock, itemNo, price, Category_id
       )
-    values (#{id,jdbcType=VARCHAR}, #{itemname,jdbcType=VARCHAR}, #{safetystock,jdbcType=INTEGER}, 
-      #{actualstock,jdbcType=INTEGER}, #{itemno,jdbcType=VARCHAR}, #{categoryId,jdbcType=VARCHAR}
+    values (#{id,jdbcType=VARCHAR}, #{itemname,jdbcType=VARCHAR}, #{safetystock,jdbcType=INTEGER},
+      #{actualstock,jdbcType=INTEGER}, #{itemno,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{categoryId,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.core.pojo.Item">
@@ -103,4 +200,17 @@
       Category_id = #{categoryId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+  <update id="increaseItemActualStock" parameterType="java.util.Map">
+    update item
+    set actualStock = actualStock + #{actualStock,jdbcType=INTEGER}
+    where itemNo = #{itemNo,jdbcType=VARCHAR}
+  </update>
+
+  <update id="reduceItemActualStock" parameterType="java.util.Map">
+    update item
+    set actualStock = actualStock - #{actualStock,jdbcType=INTEGER}
+    where itemNo = #{itemNo,jdbcType=VARCHAR}
+  </update>
+
 </mapper>

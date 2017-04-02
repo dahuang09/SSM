@@ -5,31 +5,76 @@
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="oderOutNo" jdbcType="VARCHAR" property="oderoutno" />
     <result column="amount" jdbcType="INTEGER" property="amount" />
-    <result column="dateOut" jdbcType="DATE" property="dateout" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
-    <result column="requester" jdbcType="VARCHAR" property="requester" />
     <result column="TradeOut_id" jdbcType="VARCHAR" property="tradeoutId" />
     <result column="Item_id" jdbcType="VARCHAR" property="itemId" />
   </resultMap>
+
+  <resultMap id="OrderOutListResultMap" type="OrderOut">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="oderOutNo" jdbcType="VARCHAR" property="oderoutno" />
+    <result column="amount" jdbcType="INTEGER" property="amount" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="TradeOut_id" jdbcType="VARCHAR" property="tradeoutId" />
+    <result column="Item_id" jdbcType="VARCHAR" property="itemId" />
+     <association property="category" javaType="Category">
+        <result property="name" column="categoryName"/>
+     </association>
+     <association property="item" javaType="Item">
+        <result property="itemname" column="itemName"/>
+     </association>
+     <association property="tradeOut" javaType="TradeOut">
+        <result property="tradeoutdate" column="tradeOutDate"/>
+     </association>
+  </resultMap>
+
   <sql id="Base_Column_List">
-    id, oderOutNo, amount, dateOut, remark, requester, TradeOut_id, Item_id
+    id, oderOutNo, amount, remark, requester, TradeOut_id, Item_id
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from orderout
     where id = #{id,jdbcType=VARCHAR}
   </select>
+
+  <select id="countOrderOut" resultType="java.lang.Integer">
+    select count(id)
+    from orderout
+  </select>
+
+  <select id="listOrderOut" parameterType="java.util.Map" resultMap="OrderOutListResultMap">
+    <bind name="pattern" value="'%' + name + '%'"/>
+    select
+    oo.id as "id",
+    oo.oderoutno as "oderOutNo",
+    oo.remark as "remark",
+    oo.amount as "amount",
+    tt.tradeoutdate as "tradeOutDate",
+    it.itemname as "itemName",
+    cy.name as "categoryName"
+    from orderout oo
+    inner join tradeout tt on tt.id = oo.tradeout_id
+    inner join item it on it.id = oo.item_id
+    inner join category cy on cy.id = it.category_id
+    <where>
+        <if test="name != ''">
+        and oi.orderoutno like #{pattern}
+        </if>
+    </where>
+    order by it.itemno asc
+    limit #{start}, #{limit}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from orderout
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.core.pojo.OrderOut">
-    insert into orderout (id, oderOutNo, amount, 
-      dateOut, remark, requester, 
-      TradeOut_id, Item_id)
-    values (#{id,jdbcType=VARCHAR}, #{oderoutno,jdbcType=VARCHAR}, #{amount,jdbcType=INTEGER}, 
-      #{dateout,jdbcType=DATE}, #{remark,jdbcType=VARCHAR}, #{requester,jdbcType=VARCHAR}, 
+    insert into orderout (id, oderOutNo, amount,
+      remark, TradeOut_id, Item_id)
+    values (#{id,jdbcType=VARCHAR}, #{oderoutno,jdbcType=VARCHAR}, #{amount,jdbcType=INTEGER},
+      #{remark,jdbcType=VARCHAR},
       #{tradeoutId,jdbcType=VARCHAR}, #{itemId,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.core.pojo.OrderOut">
@@ -44,14 +89,8 @@
       <if test="amount != null">
         amount,
       </if>
-      <if test="dateout != null">
-        dateOut,
-      </if>
       <if test="remark != null">
         remark,
-      </if>
-      <if test="requester != null">
-        requester,
       </if>
       <if test="tradeoutId != null">
         TradeOut_id,
@@ -70,14 +109,8 @@
       <if test="amount != null">
         #{amount,jdbcType=INTEGER},
       </if>
-      <if test="dateout != null">
-        #{dateout,jdbcType=DATE},
-      </if>
       <if test="remark != null">
         #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="requester != null">
-        #{requester,jdbcType=VARCHAR},
       </if>
       <if test="tradeoutId != null">
         #{tradeoutId,jdbcType=VARCHAR},
@@ -96,14 +129,8 @@
       <if test="amount != null">
         amount = #{amount,jdbcType=INTEGER},
       </if>
-      <if test="dateout != null">
-        dateOut = #{dateout,jdbcType=DATE},
-      </if>
       <if test="remark != null">
         remark = #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="requester != null">
-        requester = #{requester,jdbcType=VARCHAR},
       </if>
       <if test="tradeoutId != null">
         TradeOut_id = #{tradeoutId,jdbcType=VARCHAR},
@@ -118,9 +145,7 @@
     update orderout
     set oderOutNo = #{oderoutno,jdbcType=VARCHAR},
       amount = #{amount,jdbcType=INTEGER},
-      dateOut = #{dateout,jdbcType=DATE},
       remark = #{remark,jdbcType=VARCHAR},
-      requester = #{requester,jdbcType=VARCHAR},
       TradeOut_id = #{tradeoutId,jdbcType=VARCHAR},
       Item_id = #{itemId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}

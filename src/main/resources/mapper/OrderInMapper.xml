@@ -9,7 +9,6 @@
     <result column="productDate" jdbcType="DATE" property="productdate" />
     <result column="keepPeriod" jdbcType="INTEGER" property="keepperiod" />
     <result column="expiredDate" jdbcType="DATE" property="expireddate" />
-    <result column="dateIn" jdbcType="TIMESTAMP" property="datein" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="orderInNo" jdbcType="VARCHAR" property="orderinno" />
     <result column="Vendor_id" jdbcType="VARCHAR" property="vendorId" />
@@ -18,32 +17,111 @@
     <result column="User_id" jdbcType="VARCHAR" property="userId" />
     <result column="TradeIn_id" jdbcType="VARCHAR" property="tradeinId" />
   </resultMap>
+
+  <resultMap id="OrderInListResultMap" type="OrderIn">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="amount" jdbcType="INTEGER" property="amount" />
+    <result column="total" jdbcType="DECIMAL" property="total" />
+    <result column="productDate" jdbcType="DATE" property="productdate" />
+    <result column="keepPeriod" jdbcType="INTEGER" property="keepperiod" />
+    <result column="expiredDate" jdbcType="DATE" property="expireddate" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="orderInNo" jdbcType="VARCHAR" property="orderinno" />
+    <result column="Vendor_id" jdbcType="VARCHAR" property="vendorId" />
+    <result column="Item_id" jdbcType="VARCHAR" property="itemId" />
+    <result column="Warehouse_ID" jdbcType="VARCHAR" property="warehouseId" />
+    <result column="User_id" jdbcType="VARCHAR" property="userId" />
+    <result column="TradeIn_id" jdbcType="VARCHAR" property="tradeinId" />
+     <association property="category" javaType="Category">
+        <id property="id" column="categoryId"/>
+        <result property="name" column="categoryName"/>
+     </association>
+     <association property="item" javaType="Item">
+        <result property="itemname" column="itemName"/>
+     </association>
+     <association property="vendor" javaType="Vendor">
+        <result property="vendorname" column="vendorName"/>
+     </association>
+     <association property="warehouse" javaType="Warehouse">
+        <result property="name" column="warehouseName"/>
+     </association>
+     <association property="tradeIn" javaType="TradeIn">
+        <result property="tradeinno" column="tradeInNo"/>
+     </association>
+  </resultMap>
+
+
   <sql id="Base_Column_List">
-    id, price, amount, total, productDate, keepPeriod, expiredDate, dateIn, remark, orderInNo, 
+    id, price, amount, total, productDate, keepPeriod, expiredDate, remark, orderInNo,
     Vendor_id, Item_id, Warehouse_ID, User_id, TradeIn_id
   </sql>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from orderin
     where id = #{id,jdbcType=VARCHAR}
   </select>
+
+  <select id="countOrderIn" resultType="java.lang.Integer">
+    select
+    count(oi.id)
+    from orderin oi
+    inner join tradein ti on ti.id = oi.tradein_id
+    inner join item it on it.id = oi.item_id
+    inner join category cy on cy.id = it.category_id
+    inner join vendor vd on vd.id = oi.vendor_id
+    inner join warehouse wh on wh.id = oi.warehouse_id
+  </select>
+
+  <select id="listOrderIn" parameterType="java.util.Map" resultMap="OrderInListResultMap">
+    <bind name="pattern" value="'%' + name + '%'"/>
+    select
+    oi.id as "id",
+    oi.orderInNo as "orderInNo",
+    oi.amount as "amount",
+    oi.total as "total",
+    oi.productDate as "productDate",
+    oi.keepPeriod as "keepPeriod",
+    oi.expiredDate as "expiredDate",
+    oi.remark as "remark",
+    cy.name as "categoryName",
+    it.itemname as "itemName",
+    vd.vendorname as "vendorName",
+    wh.name as "warehouseName",
+    ti.tradeinno as "tradeInNo"
+    from orderin oi
+    inner join tradein ti on ti.id = oi.tradein_id
+    inner join item it on it.id = oi.item_id
+    inner join category cy on cy.id = it.category_id
+    inner join vendor vd on vd.id = oi.vendor_id
+    inner join warehouse wh on wh.id = oi.warehouse_id
+    <where>
+        <if test="name != ''">
+        and oi.orderInNo like #{pattern}
+        </if>
+    </where>
+    order by it.itemno asc
+    limit #{start}, #{limit}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from orderin
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.core.pojo.OrderIn">
-    insert into orderin (id, price, amount, 
-      total, productDate, keepPeriod, 
-      expiredDate, dateIn, remark, 
-      orderInNo, Vendor_id, Item_id, 
-      Warehouse_ID, User_id, TradeIn_id
+    insert into orderin (id, price, amount,
+      total, productDate, keepPeriod,
+      expiredDate, remark,
+      orderInNo, Vendor_id, Item_id,
+      Warehouse_ID, TradeIn_id
       )
-    values (#{id,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{amount,jdbcType=INTEGER}, 
-      #{total,jdbcType=DECIMAL}, #{productdate,jdbcType=DATE}, #{keepperiod,jdbcType=INTEGER}, 
-      #{expireddate,jdbcType=DATE}, #{datein,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
-      #{orderinno,jdbcType=VARCHAR}, #{vendorId,jdbcType=VARCHAR}, #{itemId,jdbcType=VARCHAR}, 
-      #{warehouseId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{tradeinId,jdbcType=VARCHAR}
+    values (#{id,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{amount,jdbcType=INTEGER},
+      #{total,jdbcType=DECIMAL}, #{productdate,jdbcType=DATE}, #{keepperiod,jdbcType=INTEGER},
+      #{expireddate,jdbcType=DATE}, #{remark,jdbcType=VARCHAR},
+      #{orderinno,jdbcType=VARCHAR}, #{vendorId,jdbcType=VARCHAR}, #{itemId,jdbcType=VARCHAR},
+      #{warehouseId,jdbcType=VARCHAR}, #{tradeinId,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.core.pojo.OrderIn">
