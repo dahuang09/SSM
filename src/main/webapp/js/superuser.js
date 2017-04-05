@@ -402,26 +402,26 @@ var tree = new Ext.tree.TreePanel({
                 }
             }
 
-            if (nodeId == 41) {
+            if (nodeId == 2) {
                 if (!n) {
                     n = contentPanel.add( {
                                 'id' : node.id,
                                 iconCls:'tabs',
                                     'title' : node.text,
                                 closable : true,
-                                html : '<iframe name="Sub" scrolling="auto" frameborder="0" width="100%" height="100%" src="superuser/sdeptgradelist.jsp"></iframe>'
+                                html : '<iframe name="Sub" scrolling="auto" frameborder="0" width="100%" height="100%" src="common/warehouse.jsp"></iframe>'
                             });
                 }
             }
 
-            if (nodeId == 42) {
+            if (nodeId == 3) {
                 if (!n) {
                     n = contentPanel.add( {
                                 'id' : node.id,
                                 iconCls:'tabs',
                                     'title' : node.text,
                                 closable : true,
-                                html : '<iframe name="Sub" scrolling="auto" frameborder="0" width="100%" height="100%" src="superuser/oldsdeptgradelist.jsp"></iframe>'
+                                html : '<iframe name="Sub" scrolling="auto" frameborder="0" width="100%" height="100%" src="common/vendor.jsp"></iframe>'
                             });
                 }
             }

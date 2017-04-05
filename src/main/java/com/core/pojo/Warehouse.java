@@ -15,7 +15,7 @@ public class Warehouse {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(final String id) {
         this.id = id == null ? null : id.trim();
     }
 
@@ -23,7 +23,7 @@ public class Warehouse {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name == null ? null : name.trim();
     }
 
@@ -31,7 +31,7 @@ public class Warehouse {
         return remark;
     }
 
-    public void setRemark(String remark) {
+    public void setRemark(final String remark) {
         this.remark = remark == null ? null : remark.trim();
     }
 
@@ -39,7 +39,7 @@ public class Warehouse {
         return iddeleted;
     }
 
-    public void setIddeleted(Integer iddeleted) {
+    public void setIddeleted(final Integer iddeleted) {
         this.iddeleted = iddeleted;
     }
 
@@ -47,7 +47,12 @@ public class Warehouse {
         return warehouseno;
     }
 
-    public void setWarehouseno(String warehouseno) {
+    public void setWarehouseno(final String warehouseno) {
         this.warehouseno = warehouseno == null ? null : warehouseno.trim();
     }
+
+    /**
+     * @param i
+     */
+
 }

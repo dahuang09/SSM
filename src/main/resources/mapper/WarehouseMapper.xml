@@ -5,14 +5,14 @@
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
-    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="IDDELETED" jdbcType="INTEGER" property="iddeleted" />
     <result column="WarehouseNo" jdbcType="VARCHAR" property="warehouseno" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, NAME, REMARK, IS_DELETED, WarehouseNo
+    ID, NAME, REMARK, IDDELETED, WarehouseNo
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from warehouse
     where ID = #{id,jdbcType=VARCHAR}
@@ -22,11 +22,31 @@
     where ID = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.core.pojo.Warehouse">
-    insert into warehouse (ID, NAME, REMARK, 
-      IS_DELETED, WarehouseNo)
-    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
-      #{isDeleted,jdbcType=INTEGER}, #{warehouseno,jdbcType=VARCHAR})
+    insert into warehouse (ID, NAME, REMARK,
+      IDDELETED, WarehouseNo)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
+      #{iddeleted,jdbcType=INTEGER}, #{warehouseno,jdbcType=VARCHAR})
   </insert>
+
+  <select id="countWarehouse" resultType="java.lang.Integer">
+    select count(id)
+    from warehouse
+    where iddeleted = 0
+  </select>
+
+  <select id="listWarehouse" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from warehouse
+    where iddeleted = 0
+    <if test="name != ''">
+    and name = #{name}
+    </if>
+    order by warehouseno asc
+    limit #{start}, #{limit}
+    </select>
+
+
   <insert id="insertSelective" parameterType="com.core.pojo.Warehouse">
     insert into warehouse
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -40,7 +60,7 @@
         REMARK,
       </if>
       <if test="isDeleted != null">
-        IS_DELETED,
+        IDDELETED,
       </if>
       <if test="warehouseno != null">
         WarehouseNo,
@@ -74,7 +94,7 @@
         REMARK = #{remark,jdbcType=VARCHAR},
       </if>
       <if test="isDeleted != null">
-        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+        IDDELETED = #{idDeleted,jdbcType=INTEGER},
       </if>
       <if test="warehouseno != null">
         WarehouseNo = #{warehouseno,jdbcType=VARCHAR},
@@ -86,7 +106,7 @@
     update warehouse
     set NAME = #{name,jdbcType=VARCHAR},
       REMARK = #{remark,jdbcType=VARCHAR},
-      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      IDDELETED = #{idDeleted,jdbcType=INTEGER},
       WarehouseNo = #{warehouseno,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
