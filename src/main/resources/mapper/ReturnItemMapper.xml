@@ -8,27 +8,77 @@
     <result column="Item_id" jdbcType="VARCHAR" property="itemId" />
     <result column="Warehouse_ID" jdbcType="VARCHAR" property="warehouseId" />
     <result column="User_id" jdbcType="VARCHAR" property="userId" />
+    <result column="amount" jdbcType="INTEGER" property="amount" />
   </resultMap>
+
+  <resultMap id="ReturnItemMap" type="com.core.pojo.ReturnItem">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="returnItemNo" jdbcType="VARCHAR" property="returnitemno" />
+    <result column="reason" jdbcType="VARCHAR" property="reason" />
+    <result column="Item_id" jdbcType="VARCHAR" property="itemId" />
+    <result column="Warehouse_ID" jdbcType="VARCHAR" property="warehouseId" />
+    <result column="User_id" jdbcType="VARCHAR" property="userId" />
+    <result column="amount" jdbcType="INTEGER" property="amount" />
+    <association property="item" javaType="Item">
+        <result property="itemname" column="itemName"/>
+    </association>
+    <association property="warehouse" javaType="Warehouse">
+        <result property="name" column="warehouseName"/>
+    </association>
+    <association property="user" javaType="User">
+        <result property="username" column="userName"/>
+    </association>
+  </resultMap>
+
   <sql id="Base_Column_List">
-    id, returnItemNo, reason, Item_id, Warehouse_ID, User_id
+    id, returnItemNo, reason, Item_id, Warehouse_ID, User_id, amount
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from returnitem
     where id = #{id,jdbcType=VARCHAR}
   </select>
+
+  <select id="countReturnItem" resultType="java.lang.Integer">
+    select count(id)
+    from returnitem
+  </select>
+
+  <select id="listReturnItem" parameterType = "java.util.Map" resultMap="ReturnItemMap">
+   <bind name="pattern" value="'%' + name + '%'"/>
+    select
+    ri.id as "id",
+    ri.returnitemno as "returnItemNo",
+    ri.reason as "reason",
+    ri.amount as "amount",
+    it.itemname as "itemName",
+    wh.name as "warehouseName",
+    u.username as "userName"
+    from returnitem ri
+    inner join item it on it.id = ri.item_id
+    inner join category cy on cy.id = it.category_id
+    inner join warehouse wh on wh.id = ri.warehouse_id
+    inner join user u on u.id = ri.user_id
+    <where>
+        <if test="name != ''">
+            ri.returnitemno like #{pattern}
+        </if>
+    </where>
+    limit #{start}, #{limit}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from returnitem
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.core.pojo.ReturnItem">
-    insert into returnitem (id, returnItemNo, reason, 
-      Item_id, Warehouse_ID, User_id
-      )
-    values (#{id,jdbcType=VARCHAR}, #{returnitemno,jdbcType=VARCHAR}, #{reason,jdbcType=VARCHAR}, 
-      #{itemId,jdbcType=VARCHAR}, #{warehouseId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}
-      )
+    insert into returnitem (id, returnItemNo, reason,
+      Item_id, Warehouse_ID, User_id,
+      amount)
+    values (#{id,jdbcType=VARCHAR}, #{returnitemno,jdbcType=VARCHAR}, #{reason,jdbcType=VARCHAR},
+      #{itemId,jdbcType=VARCHAR}, #{warehouseId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR},
+      #{amount,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.core.pojo.ReturnItem">
     insert into returnitem
@@ -51,6 +101,9 @@
       <if test="userId != null">
         User_id,
       </if>
+      <if test="amount != null">
+        amount,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -70,6 +123,9 @@
       </if>
       <if test="userId != null">
         #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -91,6 +147,9 @@
       <if test="userId != null">
         User_id = #{userId,jdbcType=VARCHAR},
       </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -100,7 +159,8 @@
       reason = #{reason,jdbcType=VARCHAR},
       Item_id = #{itemId,jdbcType=VARCHAR},
       Warehouse_ID = #{warehouseId,jdbcType=VARCHAR},
-      User_id = #{userId,jdbcType=VARCHAR}
+      User_id = #{userId,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=INTEGER}
     where id = #{id,jdbcType=VARCHAR}
   </update>
-</mapper>
+  </mapper>

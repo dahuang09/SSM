@@ -91,6 +91,24 @@
     order by itemno asc
    </select>
 
+   <select id="listItemInCategoryId" parameterType="java.util.Map" resultMap="ItemCategoryResult">
+    select
+    it.id as "id",
+    it.itemName as "itemname",
+    it.safetyStock as "safetystock",
+    it.actualStock as "actualstock",
+    it.itemNo as "itemno",
+    it.price as "price",
+    cy.id as "categoryId",
+    cy.name as "categoryName"
+    from item it
+    inner join category cy on cy.id = it.category_id
+    <where>
+    cy.id = #{id}
+    </where>
+    order by itemno asc
+   </select>
+
    <select id="listAvailableItem" parameterType="java.util.Map" resultMap="ItemCategoryResult">
     select
     it.id as "id",
@@ -207,10 +225,22 @@
     where itemNo = #{itemNo,jdbcType=VARCHAR}
   </update>
 
+  <update id="increaseItemActualStockById" parameterType="java.util.Map">
+    update item
+    set actualStock = actualStock + #{amount,jdbcType=INTEGER}
+    where id = #{itemId,jdbcType=VARCHAR}
+  </update>
+
   <update id="reduceItemActualStock" parameterType="java.util.Map">
     update item
     set actualStock = actualStock - #{actualStock,jdbcType=INTEGER}
     where itemNo = #{itemNo,jdbcType=VARCHAR}
+  </update>
+
+  <update id="reduceActualStockById" parameterType="java.util.Map">
+    update item
+    set actualStock = actualStock - #{amount,jdbcType=INTEGER}
+    where id = #{itemId,jdbcType=VARCHAR}
   </update>
 
 </mapper>

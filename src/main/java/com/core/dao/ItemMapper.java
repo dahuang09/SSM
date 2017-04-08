@@ -25,7 +25,11 @@ public interface ItemMapper {
 
     void increaseItemActualStock(@Param(value="itemNo")String itemNo, @Param(value="actualStock") int actualStock);
 
+    void increaseItemActualStockById(@Param(value="itemId")String itemId, @Param(value="amount") int amount);
+
     void reduceItemActualStock(@Param(value="itemNo")String itemNo, @Param(value="actualStock") int actualStock);
+
+    void reduceActualStockById(@Param(value="itemId")String itemId, @Param(value="amount") int amount);
 
     int countItemByCategoryNo(String categoryno);
 
@@ -33,6 +37,8 @@ public interface ItemMapper {
             @Param(value = "limit") int limit);
 
     List<Item> listItemInCategory(@Param(value = "categoryno") String name);
+
+    List<Item> listItemInCategoryId(@Param(value = "id") String categoryId);
 
     List<Item> listAvailableItem(@Param(value = "categoryno") String name);
 }

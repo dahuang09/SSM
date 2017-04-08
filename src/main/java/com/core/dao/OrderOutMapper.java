@@ -23,4 +23,8 @@ public interface OrderOutMapper {
 
     List<OrderOut> listOrderOut(@Param(value = "name") String name, @Param(value = "start") int start,
             @Param(value = "limit") int limit);
+
+    List<OrderOut> listOrderOutByItemId(String itemId);
+
+    void updateOrderOutAmountBy(String orderOutId, int amount, int increaseFlag);
 }

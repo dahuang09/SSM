@@ -33,6 +33,8 @@ public interface IItemService {
 
     Map<String, ?> listItemInCategory(String name);
 
+    Map<String, ?> listItemInCategoryId(String categoryId);
+
     Map<String, ?> searchAvailableItem(String name);
 
     List<Item> searchItem();

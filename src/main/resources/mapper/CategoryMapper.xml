@@ -21,7 +21,7 @@
     <include refid="Base_Column_List" />
     from category
     <where>
-    <if test="name != ''">
+    <if test="name != '' and name != null">
     and name = #{name}
     </if>
     </where>

@@ -426,14 +426,14 @@ var tree = new Ext.tree.TreePanel({
                 }
             }
 
-            if (nodeId == 51) {
+            if (nodeId == 8) {
                 if (!n) {
                     n = contentPanel.add( {
                                 'id' : node.id,
                                 iconCls:'tabs',
                                     'title' : node.text,
                                 closable : true,
-                                html : '<iframe name="Sub" scrolling="auto" frameborder="0" width="100%" height="100%" src="superuser/unroomlist.jsp"></iframe>'
+                                html : '<iframe name="Sub" scrolling="auto" frameborder="0" width="100%" height="100%" src="common/returnItem.jsp"></iframe>'
                             });
                 }
             }

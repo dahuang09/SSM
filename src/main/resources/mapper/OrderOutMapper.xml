@@ -66,6 +66,28 @@
     limit #{start}, #{limit}
   </select>
 
+   <select id="listOrderOutByItemId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from orderout
+        where item_id = #{itemId}
+        and amount > 0
+        order by amount desc
+   </select>
+
+   <update id="updateOrderOutAmountBy" parameterType="java.util.Map">
+        update orderout
+        <if test="increaseFlag==1">
+            set amount = amount + #{amount}
+        </if>
+        <if test="increateFlag==0">
+            set amount = amount - #{amount}
+        </if>
+        <where>
+            id = #{orderOutId}
+        </where>
+   </update>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from orderout
     where id = #{id,jdbcType=VARCHAR}

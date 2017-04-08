@@ -29,8 +29,10 @@ public class LoginController {
 
     @RequestMapping("/login")
     public String login(final HttpServletRequest request) {
-        final String userId = request.getParameter("userName");
+        final String userId = request.getParameter("name");
         final String password = request.getParameter("password");
+        final String leve = request.getParameter("leve");
+
         logger.info(userId + ", " + password);
         return "superuser/main";
     }

@@ -54,7 +54,7 @@ public class ItemController {
   }
 
   @RequestMapping(path="/listItem", method=RequestMethod.POST)
-  public Map<String, Object> listUser(@RequestBody final Map<String, Object> parameters){
+  public Map<String, Object> listItem(@RequestBody final Map<String, Object> parameters){
       final Object nameObj = parameters.get("name");
       final Object startObj = parameters.get("start");
       final Object limitObj =  parameters.get("limit");
@@ -94,6 +94,18 @@ public class ItemController {
       final String name = ObjectUtils.toString(nameObj);
       final Map<String, Object> map = new HashMap<String, Object>();
       final Map<String, ?> returnMap = itemService.listItemInCategory(name);
+      map.put("itemList", returnMap.get("itemList"));
+      map.put("total", returnMap.get("total"));
+      map.put("success", true);
+      return map;
+  }
+
+  @RequestMapping(path="/searchItemInCategoryId", method=RequestMethod.POST)
+  public Map<String, Object> searchItemInCategoryId(@RequestBody final Map<String, Object> parameters){
+      final Object idObj = parameters.get("id");
+      final String categoryId = ObjectUtils.toString(idObj);
+      final Map<String, Object> map = new HashMap<String, Object>();
+      final Map<String, ?> returnMap = itemService.listItemInCategoryId(categoryId);
       map.put("itemList", returnMap.get("itemList"));
       map.put("total", returnMap.get("total"));
       map.put("success", true);

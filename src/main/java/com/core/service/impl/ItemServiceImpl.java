@@ -176,4 +176,15 @@ public class ItemServiceImpl implements IItemService {
         return map;
     }
 
+    /* (non-Javadoc)
+     * @see com.core.service.IItemService#listItemInCategoryId(java.lang.String)
+     */
+    public Map<String, ?> listItemInCategoryId(final String categoryId) {
+        final Map<String, Object> map = new HashMap<String, Object>();
+        final List<Item> itemList = itemMapper.listItemInCategoryId(categoryId);
+        map.put("total", itemList.size());
+        map.put("itemList", itemList);
+        return map;
+    }
+
 }
