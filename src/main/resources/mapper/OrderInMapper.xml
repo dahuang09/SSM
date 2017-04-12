@@ -49,6 +49,10 @@
      <association property="tradeIn" javaType="TradeIn">
         <result property="tradeinno" column="tradeInNo"/>
      </association>
+     <association property="alertSetting" javaType="AlertSetting">
+        <result property="email" column="email"/>
+        <result property="alertexpireddate" column="alertExpiredDate"/>
+     </association>
   </resultMap>
 
 
@@ -104,6 +108,33 @@
     </where>
     order by it.itemno asc
     limit #{start}, #{limit}
+  </select>
+
+  <select id="alertExpiredDate" parameterType="java.util.Map" resultMap="OrderInListResultMap">
+    select
+    oi.id as "id",
+    oi.orderInNo as "orderInNo",
+    oi.amount as "amount",
+    oi.total as "total",
+    oi.productDate as "productDate",
+    oi.keepPeriod as "keepPeriod",
+    oi.expiredDate as "expiredDate",
+    oi.remark as "remark",
+    cy.name as "categoryName",
+    it.itemname as "itemName",
+    wh.name as "warehouseName",
+    als.email as "email",
+    als.alertexpireddate as "alertExpiredDate"
+    from orderin oi
+    inner join item it on it.id = oi.item_id
+    inner join alertsetting als on als.item_id = it.id
+    inner join category cy on cy.id = it.category_id
+    inner join warehouse wh on wh.id = oi.warehouse_id
+    <where>
+        oi.keepPeriod &lt; als.alertexpireddate
+        and oi.amount &gt; 0
+        and als.enabled = 1
+    </where>
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">

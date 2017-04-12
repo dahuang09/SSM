@@ -1,5 +1,8 @@
 package com.core.pojo;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class AlertSetting {
     private String id;
 
@@ -19,11 +22,27 @@ public class AlertSetting {
 
     private String itemId;
 
+    private Item item;
+
+    /**
+     * @return the item
+     */
+    public Item getItem() {
+        return item;
+    }
+
+    /**
+     * @param item the item to set
+     */
+    public void setItem(final Item item) {
+        this.item = item;
+    }
+
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(final String id) {
         this.id = id == null ? null : id.trim();
     }
 
@@ -31,7 +50,7 @@ public class AlertSetting {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(final String email) {
         this.email = email == null ? null : email.trim();
     }
 
@@ -39,7 +58,7 @@ public class AlertSetting {
         return remark;
     }
 
-    public void setRemark(String remark) {
+    public void setRemark(final String remark) {
         this.remark = remark == null ? null : remark.trim();
     }
 
@@ -47,7 +66,7 @@ public class AlertSetting {
         return message;
     }
 
-    public void setMessage(String message) {
+    public void setMessage(final String message) {
         this.message = message == null ? null : message.trim();
     }
 
@@ -55,7 +74,7 @@ public class AlertSetting {
         return alertamount;
     }
 
-    public void setAlertamount(Integer alertamount) {
+    public void setAlertamount(final Integer alertamount) {
         this.alertamount = alertamount;
     }
 
@@ -63,7 +82,7 @@ public class AlertSetting {
         return alertexpireddate;
     }
 
-    public void setAlertexpireddate(Integer alertexpireddate) {
+    public void setAlertexpireddate(final Integer alertexpireddate) {
         this.alertexpireddate = alertexpireddate;
     }
 
@@ -71,7 +90,7 @@ public class AlertSetting {
         return enabled;
     }
 
-    public void setEnabled(Integer enabled) {
+    public void setEnabled(final Integer enabled) {
         this.enabled = enabled;
     }
 
@@ -79,7 +98,7 @@ public class AlertSetting {
         return alertsettingcol;
     }
 
-    public void setAlertsettingcol(String alertsettingcol) {
+    public void setAlertsettingcol(final String alertsettingcol) {
         this.alertsettingcol = alertsettingcol == null ? null : alertsettingcol.trim();
     }
 
@@ -87,7 +106,7 @@ public class AlertSetting {
         return itemId;
     }
 
-    public void setItemId(String itemId) {
+    public void setItemId(final String itemId) {
         this.itemId = itemId == null ? null : itemId.trim();
     }
 }

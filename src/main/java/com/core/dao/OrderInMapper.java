@@ -23,4 +23,6 @@ public interface OrderInMapper {
 
     List<OrderIn> listOrderIn(@Param(value = "name") String name, @Param(value = "start") int start,
             @Param(value = "limit") int limit);
+
+    List<OrderIn> alertExpiredDate();
 }

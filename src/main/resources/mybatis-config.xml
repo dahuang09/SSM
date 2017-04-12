@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+<properties resource="jdbc.properties">
+  <!-- <property name="username" value="dev_user"/>
+  <property name="password" value="F2Fa3!33TYyg"/> -->
+</properties>
+<typeAliases>
+  <typeAlias alias="User" type="com.core.pojo.User"/>
+  <typeAlias alias="AlertSetting" type="com.core.pojo.AlertSetting"/>
+  <typeAlias alias="OrderIn" type="com.core.pojo.OrderIn"/>
+  <typeAlias alias="BizNoDefinition" type="com.core.pojo.BizNoDefinition"/>
+  <typeAlias alias="Category" type="com.core.pojo.Category"/>
+  <typeAlias alias="Item" type="com.core.pojo.Item"/>
+  <typeAlias alias="OrderIn" type="com.core.pojo.OrderIn"/>
+  <typeAlias alias="OrderOut" type="com.core.pojo.OrderOut"/>
+  <typeAlias alias="ReturnItem" type="com.core.pojo.ReturnItem"/>
+  <typeAlias alias="TradeIn" type="com.core.pojo.TradeIn"/>
+  <typeAlias alias="TradeOut" type="com.core.pojo.TradeOut"/>
+  <typeAlias alias="Vendor" type="com.core.pojo.Vendor"/>
+  <typeAlias alias="Warehouse" type="com.core.pojo.Warehouse"/>
+
+</typeAliases>
+  <environments default="development">
+    <environment id="development">
+      <transactionManager type="JDBC"/>
+      <dataSource type="POOLED">
+        <property name="driver" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+      </dataSource>
+    </environment>
+  </environments>
+  <mappers>
+    <mapper resource="mapper/UserMapper.xml"/>
+    <mapper resource="mapper/AlertSettingMapper.xml"/>
+    <mapper resource="mapper/OrderInMapper.xml"/>
+    <mapper resource="mapper/AlertSettingMapper.xml"/>
+    <mapper resource="mapper/BizNoDefinitionMapper.xml"/>
+    <mapper resource="mapper/CategoryMapper.xml"/>
+    <mapper resource="mapper/ItemMapper.xml"/>
+    <mapper resource="mapper/OrderOutMapper.xml"/>
+    <mapper resource="mapper/ReturnItemMapper.xml"/>
+    <mapper resource="mapper/TradeInMapper.xml"/>
+    <mapper resource="mapper/TradeOutMapper.xml"/>
+    <mapper resource="mapper/VendorMapper.xml"/>
+    <mapper resource="mapper/WarehouseMapper.xml"/>
+  </mappers>
+</configuration>

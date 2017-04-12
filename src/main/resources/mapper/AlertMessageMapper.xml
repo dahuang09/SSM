@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.core.dao.AlertMessageMapper">
+  <resultMap id="BaseResultMap" type="com.core.pojo.AlertMessage">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="alterMsgNo" jdbcType="VARCHAR" property="altermsgno" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="createdDate" jdbcType="DATE" property="createddate" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="Item_id" jdbcType="VARCHAR" property="itemId" />
+  </resultMap>
+
+  <resultMap id="AlertResultMap" type="com.core.pojo.AlertMessage">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="alterMsgNo" jdbcType="VARCHAR" property="altermsgno" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="createdDate" jdbcType="DATE" property="createddate" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="Item_id" jdbcType="VARCHAR" property="itemId" />
+    <association property="item" javaType="Item">
+        <result column="itemName" jdbcType="VARCHAR" property="itemname"/>
+        <result column="itemNo" jdbcType="VARCHAR" property="itemno"/>
+    </association>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, alterMsgNo, email, createdDate, remark, Item_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from alertmessage
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="count">
+    select count(id)
+    from alertmessage am
+  </select>
+
+  <select id="list" parameterType="java.util.Map" resultMap="AlertResultMap">
+    <bind name="pattern" value="'%' + searchValue + '%'"/>
+    select
+    <include refid="Base_Column_List"/>
+    , it.itemno as "itemNo"
+    , it.itemname as "itemName"
+    from alertmessage am
+    inner join item it on it.id = am.item_id
+    <where>
+        <if test="searchValue != null and searchValue != ''">
+            (am.alertmsgno like #{pattern} or item.itemname like #{pattern})
+        </if>
+    </where>
+    limit #{start}, #{limit}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from alertmessage
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.core.pojo.AlertMessage">
+    insert into alertmessage (id, alterMsgNo, email,
+      createdDate, remark, Item_id
+      )
+    values (#{id,jdbcType=VARCHAR}, #{altermsgno,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+      #{createddate,jdbcType=DATE}, #{remark,jdbcType=VARCHAR}, #{itemId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.core.pojo.AlertMessage">
+    insert into alertmessage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="altermsgno != null">
+        alterMsgNo,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="createddate != null">
+        createdDate,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="itemId != null">
+        Item_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="altermsgno != null">
+        #{altermsgno,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="createddate != null">
+        #{createddate,jdbcType=DATE},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="itemId != null">
+        #{itemId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.core.pojo.AlertMessage">
+    update alertmessage
+    <set>
+      <if test="altermsgno != null">
+        alterMsgNo = #{altermsgno,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="createddate != null">
+        createdDate = #{createddate,jdbcType=DATE},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="itemId != null">
+        Item_id = #{itemId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.core.pojo.AlertMessage">
+    update alertmessage
+    set alterMsgNo = #{altermsgno,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      createdDate = #{createddate,jdbcType=DATE},
+      remark = #{remark,jdbcType=VARCHAR},
+      Item_id = #{itemId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

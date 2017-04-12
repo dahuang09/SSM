@@ -26,7 +26,7 @@
         new Ext.grid.RowNumberer(), //
         sm,
         {header: "退货编号", dataIndex: 'returnitemno',width:100,sortable:true},
-        {header: "商品类目", dataIndex: 'categoryname',width:100,sortable:true},
+        //{header: "商品类目", dataIndex: 'categoryname',width:100,sortable:true},
         {header: "商品名称", dataIndex: 'itemname',width:100,sortable:true},
         {header: "数量", dataIndex: 'amount',width:100,sortable:true},
         {header: "退货原因", dataIndex: 'reason',width:100,sortable:true}
@@ -40,7 +40,7 @@
             successProperty: 'success'
       }, [
             {name: 'returnitemno', mapping: 'returnitemno', type: 'string'},
-            {name: 'categoryname', mapping: 'category.name', type: 'string'},
+            //{name: 'categoryname', mapping: 'category.name', type: 'string'},
             {name: 'itemname', mapping: 'item.itemname', type: 'string'},
             {name: 'amount', mapping: 'amount', type: 'int'},
             {name: 'reason', mapping: 'reason', type: 'string'}
@@ -162,7 +162,7 @@
             pageSize:5,
             store: new Ext.data.JsonStore({
                 url: 'returnItem/searchReturnItem',
-                root:'returnItemList',
+                root:'returnItemLists',
                 totalProperty: 'total',
                 remoteSort: true,
                 fields:['itemname']
@@ -174,8 +174,8 @@
     ds.load({params: {start: 0, limit:27,name:returnItemName}});
 
     ds.on('beforeload', function() {
-        var returnItemName2 = Ext.getCmp('comboid').getRawValue();
-         this.baseParams = {start:0,limit:27,name:returnItemName2};
+        var returnItemName = Ext.getCmp('comboid').getRawValue();
+         this.baseParams = {start:0,limit:27,name:returnItemName};
     });
 
   //表单

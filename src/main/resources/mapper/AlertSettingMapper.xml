@@ -12,26 +12,88 @@
     <result column="enabled" jdbcType="INTEGER" property="enabled" />
     <result column="AlertSettingcol" jdbcType="VARCHAR" property="alertsettingcol" />
   </resultMap>
+
+  <resultMap id="AlertSettingMap" type="AlertSetting">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="Item_id" jdbcType="VARCHAR" property="itemId" />
+    <result column="message" jdbcType="VARCHAR" property="message" />
+    <result column="alertAmount" jdbcType="INTEGER" property="alertamount" />
+    <result column="alertExpiredDate" jdbcType="INTEGER" property="alertexpireddate" />
+    <result column="enabled" jdbcType="INTEGER" property="enabled" />
+    <result column="AlertSettingcol" jdbcType="VARCHAR" property="alertsettingcol" />
+    <association property="item" javaType="Item">
+        <result property="itemno" column="itemno"/>
+        <result property="itemname" column="itemName"/>
+    </association>
+  </resultMap>
+
   <sql id="Base_Column_List">
     id, email, remark, Item_id, message, alertAmount, alertExpiredDate, enabled, AlertSettingcol
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from alertsetting
     where id = #{id,jdbcType=VARCHAR}
   </select>
+
+  <select id="countAlertSetting" resultType="java.lang.Integer">
+    select count(id)
+    from alertSetting
+  </select>
+
+  <select id="listAlertSetting" parameterType="java.util.Map" resultMap="AlertSettingMap">
+     <bind name="pattern" value="'%' + name + '%'"/>
+    select
+    als.id as "id",
+    als.email as "email",
+    als.remark as "remark",
+    als.message as "message",
+    als.alertamount as "alertAmount",
+    als.alertexpireddate as "alertExpiredDate",
+    als.enabled as "enabled",
+    it.itemno as "itemNo",
+    it.itemname as "itemName"
+    from alertSetting als
+    inner join item it on it.id = als.item_id
+    <where>
+        <if test="name != '' and name != null">
+            it.itemname like #{pattern}
+        </if>
+    </where>
+    limit #{start}, #{limit}
+  </select>
+
+  <select id="alertAmount" parameterType="java.util.Map" resultMap="AlertSettingMap">
+     select
+    als.id as "id",
+    als.email as "email",
+    als.remark as "remark",
+    als.message as "message",
+    als.alertamount as "alertAmount",
+    als.alertexpireddate as "alertExpiredDate",
+    als.enabled as "enabled",
+    it.itemno as "itemNo",
+    it.itemname as "itemName"
+    from alertSetting als
+    inner join item it on it.id = als.item_id
+    where it.actualStock &lt; als.alertAmount
+    and als.enabled = 1
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from alertsetting
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.core.pojo.AlertSetting">
-    insert into alertsetting (id, email, remark, 
-      Item_id, message, alertAmount, 
+    insert into alertsetting (id, email, remark,
+      Item_id, message, alertAmount,
       alertExpiredDate, enabled, AlertSettingcol
       )
-    values (#{id,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
-      #{itemId,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR}, #{alertamount,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
+      #{itemId,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR}, #{alertamount,jdbcType=INTEGER},
       #{alertexpireddate,jdbcType=INTEGER}, #{enabled,jdbcType=INTEGER}, #{alertsettingcol,jdbcType=VARCHAR}
       )
   </insert>

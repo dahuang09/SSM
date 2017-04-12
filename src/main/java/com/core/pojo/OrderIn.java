@@ -41,7 +41,21 @@ public class OrderIn {
     private Vendor vendor;
     private Warehouse warehouse;
     private TradeIn tradeIn;
+    private AlertSetting alertSetting;
 
+    /**
+     * @return the alertSetting
+     */
+    public AlertSetting getAlertSetting() {
+        return alertSetting;
+    }
+
+    /**
+     * @param alertSetting the alertSetting to set
+     */
+    public void setAlertSetting(final AlertSetting alertSetting) {
+        this.alertSetting = alertSetting;
+    }
 
     /**
      * @return the category

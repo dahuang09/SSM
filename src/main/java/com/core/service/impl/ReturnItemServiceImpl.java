@@ -63,7 +63,7 @@ public class ReturnItemServiceImpl implements IReturnItemService {
             }
             final String itemId = returnItem.getItemId();
             final int returnAmount = returnItem.getAmount();
-            itemMapper.increaseItemActualStock(itemId, returnAmount);
+            itemMapper.increaseItemActualStockById(itemId, returnAmount);
 //            final List<OrderOut> orderOuts = orderOutMapper.listOrderOutByItemId(itemId);
 //            for (final OrderOut orderOut : orderOuts) {
 //                final int orderOutAmount = orderOut.getAmount();
@@ -80,6 +80,7 @@ public class ReturnItemServiceImpl implements IReturnItemService {
             returnItem.setReturnitemno(bizNo);
             final User user = userMapper.selectByPrimaryKey("joyce");
             final String userId = user.getId();
+            returnItem.setWarehouseId("5c3c2353f73e44f38fb9f2e5f2b0585b");
             returnItem.setUserId(userId);
             this.returnItemMapper.insert(returnItem);
         } catch (final Throwable e) {
