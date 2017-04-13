@@ -4,7 +4,7 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
     version="3.0">
     <display-name>SSM</display-name>
-    <!-- Spring和mybatis的配置文件 -->
+    <!-- Spring和mybatis的�?置文件 -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:spring-mybatis.xml</param-value>
@@ -15,7 +15,7 @@
         <listener-class>com.core.util.ContextLoaderListener</listener-class>
     </listener>
 
-    <!-- 编码过滤器 -->
+    <!-- 编�?过滤器 -->
     <filter>
         <filter-name>encodingFilter</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -38,11 +38,11 @@
     <filter-name>httpPutFormFilter</filter-name>
     <servlet-name>SpringMVC</servlet-name>
 </filter-mapping>
-    <!-- Spring监听器 -->
+    <!-- Spring监�?�器 -->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
-    <!-- 防止Spring内存溢出监听器 -->
+    <!-- 防止Spring内存溢出监�?�器 -->
     <listener>
         <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
     </listener>
@@ -60,11 +60,11 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>SpringMVC</servlet-name>
-        <!-- 此处可以可以配置成*.do，对应struts的后缀习惯 -->
+        <!-- 此处�?�以�?�以�?置�?*.do，对应struts的�?�缀习惯 -->
         <url-pattern>/</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
-        <welcome-file>/index.jsp</welcome-file>
+        <welcome-file>login.jsp</welcome-file>
     </welcome-file-list>
     <servlet-mapping>
      <servlet-name>default</servlet-name>
@@ -97,7 +97,7 @@
      <url-pattern>*.js</url-pattern>
  </servlet-mapping>
 
-  <servlet-mapping>
+<servlet-mapping>
      <servlet-name>default</servlet-name>
      <url-pattern>*.png</url-pattern>
  </servlet-mapping>
