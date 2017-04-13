@@ -25,8 +25,8 @@
         new Ext.grid.RowNumberer(), //
         sm,
         {header: "类目编号", dataIndex: 'categoryno',width:300,sortable:true,renderer:renderusername},
-        {header: "类目名称", dataIndex: 'name',width:300,sortable:true,renderer:renderusername},
-        {header: "备注", dataIndex: 'remark',width:300,sortable:true}
+        {header: "类目名称", dataIndex: 'name',width:300,sortable:true,editor:new Ext.grid.GridEditor(nameEditField)},
+        {header: "备注", dataIndex: 'remark',width:300,sortable:true,editor:new Ext.grid.GridEditor(remarkEditField)}
     ]);
     //var ds = new Ext.data.Store({
     var ds = new Ext.data.GroupingStore({
@@ -77,7 +77,7 @@
                 });
                 if(jsonArray.length!=0){
                     Ext.Ajax.request({
-                    url:'editadmin.action',
+                    url:'category/update',
                  success:function(){
                      Ext.Msg.alert('提示','修改成功',function(){ds.reload();});
                  },failure:function(){
@@ -307,7 +307,7 @@ function renderusername(value){
       * 表单样式
       */
      var categorynameField = new Ext.form.TextField({
-      fieldLabel:'类目名',
+      fieldLabel:'类目名称',
       name:'name',
       allowBlank:false,
       emptyText:'空',
@@ -317,6 +317,15 @@ function renderusername(value){
      /**
       * 表单样式
       */
+     var nameEditField = new Ext.form.NumberField({
+         fieldLabel:'类目名称',
+           name:'name',
+           allowBlank:false,
+           emptyText:'空',
+           vtype:'alphanum',
+           vtypeText:'',
+           msgTarget:'side'
+     });
      var remarkField = new Ext.form.TextArea({
       fieldLabel:'备注',
       name:'remark',
@@ -324,6 +333,15 @@ function renderusername(value){
       msgTarget:'side'
     });
 
+     var remarkEditField = new Ext.form.NumberField({
+         fieldLabel:'备注',
+           name:'remark',
+           allowBlank:false,
+           emptyText:'空',
+           vtype:'alphanum',
+           vtypeText:'',
+           msgTarget:'side'
+     });
 
 
 

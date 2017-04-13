@@ -25,8 +25,8 @@ Ext.onReady(function() {
         new Ext.grid.RowNumberer(), //
         sm,
         {header: "仓库编号", dataIndex: 'warehouseno',width:300,sortable:true,renderer:renderusername},
-        {header: "仓库名称", dataIndex: 'name',width:300,sortable:true,renderer:renderusername},
-        {header: "备注", dataIndex: 'remark',width:300,sortable:true}
+        {header: "仓库名称", dataIndex: 'name',width:300,sortable:true,renderer:renderusername,editor:new Ext.grid.GridEditor(nameEditField)},
+        {header: "备注", dataIndex: 'remark',width:300,sortable:true,editor:new Ext.grid.GridEditor(remarkEditField)}
     ]);
     //var ds = new Ext.data.Store({
     var ds = new Ext.data.GroupingStore({
@@ -77,13 +77,13 @@ Ext.onReady(function() {
                 });
                 if(jsonArray.length!=0){
                     Ext.Ajax.request({
-                    url:'editadmin.action',
+                    url:'warehouse/update',
                  success:function(){
                      Ext.Msg.alert('提示','修改成功',function(){ds.reload();});
                  },failure:function(){
                    Ext.Msg.alert('错误','与后台联系的时候出现了问题');
                  },
-                 params:{adminjson:Ext.util.JSON.encode(jsonArray)}
+                 params:{jsonParam:Ext.util.JSON.encode(jsonArray)}
                 });
                 }else{
                     Ext.Msg.alert('提示','你没有修改过任何信息');
@@ -283,6 +283,7 @@ Ext.onReady(function() {
 
 });
 
+
 function renderusername(value){
     var warehouseno = value;
     return "<span style='color:#FF3333;font-weight:bold;'>"+warehouseno+"</span>";
@@ -320,10 +321,16 @@ function renderusername(value){
       width: 200,
       msgTarget:'side'
     });
-
-
-
-
-
-
+     var nameEditField = new Ext.form.TextField({
+    	    fieldLabel:'仓库名称',
+    	      name:'name',
+    	      allowBlank:false,
+    	      msgTarget:'side'
+    	});
+     var remarkEditField = new Ext.form.TextField({
+ 	    fieldLabel:'备注',
+ 	      name:'remark',
+ 	      allowBlank:false,
+ 	      msgTarget:'side'
+ 	});
 

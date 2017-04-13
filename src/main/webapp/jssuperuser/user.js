@@ -25,9 +25,9 @@
         new Ext.grid.RowNumberer(), //
         sm,
         {header: "用户编码", dataIndex: 'userno',width:300,sortable:true,renderer:renderusername},
-        {header: "用户名", dataIndex: 'username',width:300,sortable:true,renderer:renderusername},
-        {header: "密码", dataIndex: 'password',width:300,sortable:true,editor:new Ext.grid.GridEditor(passwordField)},
-        {header: "超鸡管理员", id:'isadmin',dataIndex: 'isadmin',width:300,sortable:true}
+        {header: "用户名", dataIndex: 'username',width:200,sortable:true,renderer:renderusername,editor:new Ext.grid.GridEditor(usernameEditField)},
+        {header: "密码", dataIndex: 'password',width:300,sortable:true,renderer:renderusername,editor:new Ext.grid.GridEditor(passwordEditField)},
+        {header: "超级管理员", id:'isadmin',dataIndex: 'isadmin',width:300,sortable:true,renderer:renderBoolean}
     ]);
     //var ds = new Ext.data.Store({
     var ds = new Ext.data.GroupingStore({
@@ -37,9 +37,9 @@
             root: 'userlist',
             successProperty: 'success'
       }, [
+            {name: 'userno', mapping: 'userno', type: 'string'},
             {name: 'username', mapping: 'username', type: 'string'},
             {name: 'password', mapping: 'password', type: 'string'},
-            {name: 'userno', mapping: 'userno', type: 'string'},
             {name: 'isadmin', mapping: 'isadmin', type: 'string'}
         ]) ,
         pruneModifiedRecords:true,
@@ -79,13 +79,13 @@
                 });
                 if(jsonArray.length!=0){
                     Ext.Ajax.request({
-                    url:'editadmin.action',
+                    url:'user/update',
                  success:function(){
                      Ext.Msg.alert('提示','修改成功',function(){ds.reload();});
                  },failure:function(){
                    Ext.Msg.alert('错误','与后台联系的时候出现了问题');
                  },
-                 params:{adminjson:Ext.util.JSON.encode(jsonArray)}
+                 params:{jsonParam:Ext.util.JSON.encode(jsonArray)}
                 });
                 }else{
                     Ext.Msg.alert('提示','你没有修改过任何信息');
@@ -330,6 +330,16 @@
           return "<span style='color:#FF3333;font-weight:bold;'>"+username+"</span>";
 
       }
+
+      function renderBoolean(value){
+    	  if(value == 2) {
+    		  return "否";
+    	  } else {
+    		  return "是";
+    	  }
+
+      }
+
       //查询
       function searchadmin(){
          var username = Ext.getCmp("comboid").getValue();
@@ -351,11 +361,19 @@
       allowBlank:false,
       emptyText:'空',
       vtype:'alphanum',
-      vtypeText:'只能输入字母和数字',
+      vtypeText:'',
       msgTarget:'side'
     });
 
-
+    var usernameEditField = new Ext.form.TextField({
+        fieldLabel:'用户名',
+          name:'username',
+          allowBlank:false,
+          emptyText:'空',
+          vtype:'alphanum',
+          vtypeText:'',
+          msgTarget:'side'
+    });
     var passwordField = new Ext.form.TextField({
         fieldLabel:'密&nbsp;&nbsp;&nbsp;&nbsp;码',
           name:'password',
@@ -366,13 +384,22 @@
           msgTarget:'side'
     });
 
+    var passwordEditField = new Ext.form.TextField({
+        fieldLabel:'密&nbsp;&nbsp;&nbsp;&nbsp;码',
+          name:'password',
+          allowBlank:false,
+          emptyText:'空',
+          vtype:'alphanum',
+          vtypeText:'只能输入字母和数字',
+          msgTarget:'side'
+    });
     var isAdminField = new Ext.form.RadioGroup({
         fieldLabel: '超级管理员',
         anchor: '50%',
         columns: 2,
         vertical: true,
         items: [
-            { boxLabel: '是', name: 'isadmin', inputValue: '1', checked: true },
+            { boxLabel: '是', name: 'isadmin', inputValue: '1'},
             { boxLabel: '否', name: 'isadmin', inputValue: '0' }
         ]
     });

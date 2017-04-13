@@ -1,4 +1,4 @@
-﻿Ext.onReady(function() {
+Ext.onReady(function() {
 
      window.ChangeTheme = function(value) {
 
@@ -16,68 +16,53 @@
 
                     window.document.getElementsByTagName("link")[1].href="ext/resources/css/xtheme-"+css+ ".css";
 
-    //表格
-    Ext.QuickTips.init();
-    var batchAddItemWin = new Ext.Window({
-        title : '添加商品',
-        width: 1000,
-        bodyStyle:"padding:10px;",
-        maximizable:false,
-        //plain:true,
-        resizable : false,
-        autoHeight : true,
-        modal : true,
-        closable:true,
-        closeAction : 'hide',
-        buttonAlign:"center",
-        layout:'fit',
-        listeners : {
-            'hide' : function(){
-                //this.findById('bookName').ownerCt.form.reset();
-//                editpasswordForm.getForm().reset();
-            }
-        },
-        html: '<iframe style="width:100%; height:450px;" src="common/addItem.jsp" frameborder="0" scrolling="false"></iframe>',
-    });
-
-
-   var itemName2 = null;
+   //表格
+   Ext.QuickTips.init();
+   var username2 = null;
 
     var sm = new Ext.grid.CheckboxSelectionModel({handleMouseDown:Ext.emptyFn()}); // CheckBox
     var cm = new Ext.grid.ColumnModel([
         new Ext.grid.RowNumberer(), //
         sm,
-        {header: "商品编号", dataIndex: 'itemno',width:100,sortable:true,renderer:renderusername},
-        {header: "商品名称", dataIndex: 'itemname',width:100,sortable:true,renderer:renderusername,editor:new Ext.grid.GridEditor(itemnameEditField)},
-        {header: "安全库存量", dataIndex: 'safetystock',width:100,sortable:true,editor:new Ext.grid.GridEditor(safetystockEditField)},
-        {header: "当前库存量", dataIndex: 'actualstock',width:100,sortable:true,editor:new Ext.grid.GridEditor(actualstockEditField)},
-        {header: "单价", dataIndex: 'price',width:100,sortable:true,editor:new Ext.grid.GridEditor(priceEditField)},
-        {header: "商品类目", dataIndex: 'categoryname',width:100,sortable:true}
+        {header: "供应商编码", dataIndex: 'alertno',width:300,sortable:true,renderer:renderusername},
+        {header: "商品编号", dataIndex: 'itmeno',width:300,sortable:true,renderer:renderusername},
+        {header: "商品名称", dataIndex: 'itmename',width:300,sortable:true,renderer:renderusername},
+        {header: "预警信息", dataIndex: 'message',width:300,sortable:true,renderer:renderusername},
+        {header: "预警存量", dataIndex: 'alertAmount',width:300,sortable:true,renderer:renderusername},
+        {header: "预计过期时间", dataIndex: 'alertExpireddate',width:300,sortable:true,renderer:renderusername},
+        {header: "备注", dataIndex: 'remark',width:300,sortable:true,renderer:renderusername},
+        {header: "供应商邮箱", dataIndex: 'email',width:300,sortable:true,renderer:renderusername},
+        {header: "是否启用预警", dataIndex: 'enable',width:300,sortable:true,renderer:renderusername}
     ]);
     //var ds = new Ext.data.Store({
     var ds = new Ext.data.GroupingStore({
-        proxy: new Ext.data.HttpProxy({url: 'item/listItem'}),
+        proxy: new Ext.data.HttpProxy({url: 'alertSetting/listAlertSetting'}),
         reader: new Ext.data.JsonReader({
             totalProperty: 'total',
-            root: 'itemList',
+            root: 'alertSettingList',
             successProperty: 'success'
       }, [
-            {name: 'itemno', mapping: 'itemno', type: 'string'},
-            {name: 'itemname', mapping: 'itemname', type: 'string'},
-            {name: 'safetystock', mapping: 'safetystock', type: 'float'},
-            {name: 'actualstock', mapping: 'actualstock', type: 'float'},
-            {name: 'price', mapping: 'price', type: 'float'},
-            {name: 'categoryname', mapping: 'category.name', type: 'string'}
+            {name: 'alertno', mapping: 'alertno', type: 'string'},
+            {name: 'itmeno', mapping: 'itmeno', type: 'string'},
+            {name: 'itmename', mapping: 'itmename', type: 'string'},
+            {name: 'message', mapping: 'message', type: 'string'},
+            {name: 'alertAmount', mapping: 'alertAmount', type: 'string'},
+            {name: 'alertExpireddate', mapping: 'alertExpireddate', type: 'string'},
+            {name: 'remark', mapping: 'remark', type: 'string'},
+            {name: 'email', mapping: 'email', type: 'string'},
+            {name: 'alertExpireddate', mapping: 'alertExpireddate', type: 'string'}
         ]) ,
         pruneModifiedRecords:true,
-        groupField:'categoryname',
-        sortInfo:{field:'itemno',direction:"ASC"}
+        groupField:'',
+        sortInfo:{field:'alertno',direction:"ASC"}
     });
+
 
     //var grid = new Ext.grid.GridPanel({
     var grid = new Ext.grid.EditorGridPanel({
         region : 'center',
-        id:'itemGrid',
+        id:'alertsettingGrid',
+        //el:'adminlist',
         ds: ds,   //数据源
         sm: sm,   //每行数据前面的复选框
         cm: cm,   //表格上的列
@@ -93,17 +78,37 @@
 
         //顶部工具栏
         tbar:new Ext.Toolbar(['-',{
-            text:'添加',
+            text:'保存',
             icon : 'ext/imgs/save.jpg',
             handler:function(){
-                batchAddItemWin.show();
+                var modified = ds.modified;
+                 var m = modified.slice(0);//m是数组；这两句是复制ds.modified,保证ds.modified中的原始数据不受影响。
+                 var jsonArray = [];
+                 Ext.each(m,function(item){ //Ext.each(array,fn(item))作用是遍历array，并对每项分别调用fn函数，item为当前遍历的数组元素（当前元素索引）
+                    jsonArray.push(item.data);
+                });
+                if(jsonArray.length!=0){
+                    Ext.Ajax.request({
+                    url:'editadmin.action',
+                 success:function(){
+                     Ext.Msg.alert('提示','修改成功',function(){ds.reload();});
+                 },failure:function(){
+                   Ext.Msg.alert('错误','与后台联系的时候出现了问题');
+                 },
+                 params:{adminjson:Ext.util.JSON.encode(jsonArray)}
+                });
+                }else{
+                    Ext.Msg.alert('提示','你没有修改过任何信息');
+                }
+
+
             }
         },'-',{
                     text: '删除',
                     icon : 'ext/imgs/del.gif',
                     handler: function(btn, pressed)
                     {
-                           var rows=Ext.getCmp("userGrid").getSelectionModel().getSelections();    //获取选中的行
+                           var rows=Ext.getCmp("alertSettingGrid").getSelectionModel().getSelections();    //获取选中的行
                             if(rows.length==0)
                             {
                                 Ext.Msg.alert("提示信息","请您至少选择一个!");
@@ -138,10 +143,10 @@
                                              jsonArray.push(rows[i].data);
                                          }
                                         Ext.Ajax.request({
-                                            url:'item/update',
+                                            url:'deleteadmin.action',
                                          success:function(){
-                                             Ext.Msg.alert('成功','删除用户成功',function(){
-                                             var grid = Ext.getCmp('userGrid');
+                                             Ext.Msg.alert('成功','删除成功',function(){
+                                             var grid = Ext.getCmp('alertSettingGrid');
                                             var ds = grid.getStore();
                                             ds.remove(rows);});
                                          },failure:function(){
@@ -169,43 +174,21 @@
             displayInfo: true,
             displayMsg: '显示第 {0} 条到 {1} 条记录, 共 {2} 条',
            emptyMsg: '没有记录',
-           items : ['-',{
-            xtype: 'combo',
-            id:'comboid',
-            hiddenName: 'itemname',
-            valueField: 'itemname',
-            displayField: 'itemname',
-            editable: true,
-             emptyText:'请选择商品名称',
-            //allowBlank : false,
-            //blankText    :'请选择区名',
-            //msgTarget :'qtip',
-            triggerAction: 'all',
-            width: 150,
-            mode: 'remote',
-            minListWidth:250,
-            pageSize:5,
-            store: new Ext.data.JsonStore({
-                url: 'item/searchItem',
-                root:'itemList',
-                totalProperty: 'total',
-                remoteSort: true,
-                fields:['itemname']
-            })
-        },{xtype:'button',text:'查询',  icon : 'ext/imgs/search.gif',handler:function(){searchadmin();}} ]
+
         })
     });
 
-    ds.load({params: {start: 0, limit:27,name:itemName2}});
+    ds.load({params: {start: 0, limit:27,username:username2}});
 
     ds.on('beforeload', function() {
-        var itemName2 = Ext.getCmp('comboid').getRawValue();
-         this.baseParams = {start:0,limit:27,name:itemName2};
+        var username2 = Ext.getCmp('comboid').getRawValue();
+         this.baseParams = {start:0,limit:27,username:username2};
     });
+    //ds.load(/*{params: {start: 0, limit:27}}*/);
 
     //表单
     var form1 = new Ext.form.FormPanel({
-      title:'添加商品',
+      title:'添加预警设置信息',
       region:'east',
       split:true,
       width:300,
@@ -213,11 +196,13 @@
       maxSize:200,
       collapsible:true,
       autoHeight:true,
-      labelWidth:60,
+      //height:100,
+      //width:500,
+      labelWidth:105,
       labelAlign:'right',
       frame:true,
-      items:[itemNameField,saftyStockField,actualStockField,priceField,categoryCombo],
-
+      items:[alertnoNameField,aitmenoField,messageField,alertAmountField,
+             alertExpireddateField,isEnableField,remarkField,emailField],
       buttons:[{
         text:'提交',
         type:"submit",
@@ -247,7 +232,7 @@
                    }
 
                 form1.getForm().submit({
-                    url:'item/add',
+                    url:'alertsetting/add',
                     method:'post',
                     dataType:'json',
                     // 如果有表单以外的其它参数，可以加在这里。我这里暂时为空，也可以将下面这句省略
@@ -255,7 +240,7 @@
                     // 第一个参数是传入该表单，第二个是Ext.form.Action对象用来取得服务器端传过来的json数据
                       success:function(form,action){
                           Ext.Msg.alert('信息', action.result.message,function(){
-                              Ext.getCmp('itemGrid').getStore().reload();
+                              Ext.getCmp('userGrid').getStore().reload();
                           });
                       },
                       failure:function(form,action){
@@ -282,6 +267,7 @@
 
 
    var adminpanel = new Ext.Panel({
+       //renderTo: 'iframepanel',
        layout:'border',
        items:[grid,form1]
    });
@@ -293,123 +279,89 @@
 
 });
 
-function renderusername(value){
-    var catgoryno = value;
-    return "<span style='color:#FF3333;font-weight:bold;'>"+catgoryno+"</span>";
 
-}
 
-       //查询
-      function searchadmin(){
-         var name = Ext.getCmp("comboid").getValue();
-         var name2 = name.trim();
-         if(name2.length<=0 || name2.length == ''){
-             Ext.Msg.alert('提示','请选择一个你要查询的类目名');
-         }else{
-                 Ext.getCmp('itemGrid').getStore().load();
-         }
-     }
+     /**
+      * 表格样式
+      * @param {} value
+      * @return {}
+      */
+
+     //修改username输出的格式
+      function renderusername(value){
+          var username = value;
+          return "<span style='color:#FF3333;font-weight:bold;'>"+username+"</span>";
+
+      }
+      //查询
+
 
      /**
       * 表单样式
       */
-     var itemNameField = new Ext.form.TextField({
-      fieldLabel:'商品名称',
-      name:'itemname',
-      width: 200,
+
+
+     var alertnoNameField = new Ext.form.TextField({
+      fieldLabel:'预警设置编号',
+      name:'alertno',
       allowBlank:false,
       emptyText:'空',
       msgTarget:'side'
     });
-     var itemnameEditField = new Ext.form.TextField({
-         fieldLabel:'商品名称',
-           name:'itemname',
-           allowBlank:false,
-           emptyText:'空',
-           vtype:'alphanum',
-           vtypeText:'',
-           msgTarget:'side'
-     });
 
 
-     /**
-      * 表单样式
-      */
-     var saftyStockField = new Ext.form.NumberField({
-      fieldLabel:'安全库存',
-      name:'safetystock',
-      width: 200,
-      msgTarget:'side'
+    var aitmenoField = new Ext.form.TextField({
+        fieldLabel:'商品编号',
+          name:'itmeno',
+          allowBlank:false,
+          emptyText:'空',
+          msgTarget:'side'
     });
 
-     var safetystockEditField = new Ext.form.NumberField({
-         fieldLabel:'安全库存',
-           name:'safetystock',
-           allowBlank:false,
-     });
-     var actualStockField = new Ext.form.NumberField({
-         fieldLabel:'实际库存',
-         name:'actualstock',
-         width: 200,
-         msgTarget:'side'
-       });
+    var messageField = new Ext.form.TextField({
+        fieldLabel: '预警信息',
+        name:'message',
+        allowBlank:false,
+        emptyText:'空',
+        msgTarget:'side'
+    });
+    var alertAmountField = new Ext.form.TextField({
+        fieldLabel: '预警数量',
+        name:'alertAmount',
+        allowBlank:false,
+        emptyText:'空',
+        msgTarget:'side'
+    });
+    var alertExpireddateField = new Ext.form.TextField({
+        fieldLabel: '预警过期时间',
+        name:'alertExpireddate',
+        allowBlank:false,
+        emptyText:'空',
+        msgTarget:'side'
+    });
 
-     var actualstockEditField = new Ext.form.NumberField({
-         fieldLabel:'实际库存',
-           name:'actualstock',
-           allowBlank:false,
-           emptyText:'空',
-           vtype:'alphanum',
-           vtypeText:'',
-           msgTarget:'side'
-     });
-
-
-     var priceField = new Ext.form.NumberField({
-         fieldLabel:'单价',
-         name:'price',
-         width: 200,
-         msgTarget:'side'
-       });
-
-     var priceEditField = new Ext.form.NumberField({
-         fieldLabel:'单价',
-           name:'price',
-           allowBlank:false,
-           emptyText:'空',
-           vtype:'alphanum',
-           vtypeText:'',
-           msgTarget:'side'
-     });
-
-     var categoryCombo = new Ext.form.ComboBox({
-         id:'categoryComboid',
-         fieldLabel:'商品类目',
-         hiddenName: 'categoryId',
-         valueField: 'id',
-         displayField: 'name',
-         editable: false,
-          emptyText:'请选择类目',
-         triggerAction: 'all',
-         width: 150,
-         mode: 'remote',
-         minListWidth:250,
-         pageSize:5,
-         store: new Ext.data.JsonStore({
-             url: 'category/searchCategory',
-             root:'categoryList',
-             totalProperty: 'total',
-             remoteSort: true,
-             fields:['id', 'name']
-         })
-         });
-
-
-
-
-
-
-
-
-
+    var isEnableField = new Ext.form.RadioGroup({
+        fieldLabel: '是否启用预警',
+        anchor: '50%',
+        columns: 2,
+        vertical: true,
+        items: [
+            { boxLabel: '是', name: 'isenable', inputValue: '1'},
+            { boxLabel: '否', name: 'isenable', inputValue: '0' }
+        ]
+    });
+    var remarkField = new Ext.form.TextField({
+        fieldLabel: '备注',
+        name:'remark',
+        allowBlank:false,
+        emptyText:'空',
+        msgTarget:'side'
+    });
+    var emailField = new Ext.form.TextField({
+        fieldLabel: '邮箱地址',
+        name:'email',
+        allowBlank:false,
+        emptyText:'空',
+        msgTarget:'side'
+    });
 

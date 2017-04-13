@@ -25,12 +25,12 @@ Ext.onReady(function() {
         new Ext.grid.RowNumberer(), //
         sm,
         {header: "供应商编码", dataIndex: 'vendorno',width:300,sortable:true,renderer:renderusername},
-        {header: "供应商名称", dataIndex: 'vendorname',width:300,sortable:true,renderer:renderusername},
-        {header: "供应商地址", dataIndex: 'address',width:300,sortable:true,renderer:renderusername},
-        {header: "供应商电话", dataIndex: 'telno',width:300,sortable:true,renderer:renderusername},
-        {header: "供应商邮箱", dataIndex: 'email',width:300,sortable:true,renderer:renderusername},
-        {header: "备注", dataIndex: 'remark',width:300,sortable:true,renderer:renderusername},
-        {header: "传真", dataIndex: 'fax',width:300,sortable:true,renderer:renderusername}
+        {header: "供应商名称", dataIndex: 'vendorname',width:300,sortable:true,renderer:renderusername,editor:new Ext.grid.GridEditor(vendornameEditField)},
+        {header: "供应商地址", dataIndex: 'address',width:300,sortable:true,renderer:renderusername,editor:new Ext.grid.GridEditor(addressEditField)},
+        {header: "供应商电话", dataIndex: 'telno',width:300,sortable:true,renderer:renderusername,editor:new Ext.grid.GridEditor(telnoEditField)},
+        {header: "供应商邮箱", dataIndex: 'email',width:300,sortable:true,renderer:renderusername,editor:new Ext.grid.GridEditor(emailEditField)},
+        {header: "备注", dataIndex: 'remark',width:300,sortable:true,renderer:renderusername,editor:new Ext.grid.GridEditor(remarkEditField)},
+        {header: "传真", dataIndex: 'fax',width:300,sortable:true,renderer:renderusername,editor:new Ext.grid.GridEditor(faxEditField)}
 
     ]);
     //var ds = new Ext.data.Store({
@@ -86,13 +86,13 @@ Ext.onReady(function() {
                 });
                 if(jsonArray.length!=0){
                     Ext.Ajax.request({
-                    url:'editadmin.action',
+                    url:'vendor/update',
                  success:function(){
                      Ext.Msg.alert('提示','修改成功',function(){ds.reload();});
                  },failure:function(){
                    Ext.Msg.alert('错误','与后台联系的时候出现了问题');
                  },
-                 params:{adminjson:Ext.util.JSON.encode(jsonArray)}
+                 params:{jsonParam:Ext.util.JSON.encode(jsonArray)}
                 });
                 }else{
                     Ext.Msg.alert('提示','你没有修改过任何信息');
@@ -327,6 +327,9 @@ Ext.onReady(function() {
       */
 
 
+
+
+
      var vendorNameField = new Ext.form.TextField({
       fieldLabel:'供应商名称',
       name:'vendorname',
@@ -335,6 +338,15 @@ Ext.onReady(function() {
       msgTarget:'side'
     });
 
+     var vendornameEditField = new Ext.form.TextField({
+         fieldLabel:'供应商名称',
+           name:'vendorname',
+           allowBlank:false,
+           emptyText:'空',
+           vtype:'alphanum',
+           vtypeText:'',
+           msgTarget:'side'
+     });
 
     var addressField = new Ext.form.TextField({
         fieldLabel:'地&nbsp;&nbsp;&nbsp;&nbsp;址',
@@ -343,6 +355,17 @@ Ext.onReady(function() {
           emptyText:'空',
           msgTarget:'side'
     });
+    var addressEditField = new Ext.form.TextField({
+        fieldLabel:'地&nbsp;&nbsp;&nbsp;&nbsp;址',
+          name:'address',
+          allowBlank:false,
+          emptyText:'空',
+          vtype:'alphanum',
+          vtypeText:'',
+          msgTarget:'side'
+    });
+
+
 
     var telnoField = new Ext.form.TextField({
         fieldLabel: '电话号码',
@@ -351,12 +374,33 @@ Ext.onReady(function() {
         emptyText:'空',
         msgTarget:'side'
     });
+
+    var telnoEditField = new Ext.form.TextField({
+        fieldLabel:'电话号码',
+          name:'telno',
+          allowBlank:false,
+          emptyText:'空',
+          vtype:'alphanum',
+          vtypeText:'',
+          msgTarget:'side'
+    });
+
     var emailField = new Ext.form.TextField({
         fieldLabel: '邮箱',
         name:'email',
         allowBlank:false,
         emptyText:'空',
         msgTarget:'side'
+    });
+
+    var emailEditField = new Ext.form.TextField({
+        fieldLabel:'邮箱',
+          name:'email',
+          allowBlank:false,
+          emptyText:'空',
+          vtype:'alphanum',
+          vtypeText:'',
+          msgTarget:'side'
     });
     var remarkField = new Ext.form.TextField({
         fieldLabel: '备注',
@@ -366,10 +410,30 @@ Ext.onReady(function() {
         msgTarget:'side'
     });
 
+    var remarkEditField = new Ext.form.TextField({
+        fieldLabel:'备注',
+          name:'remark',
+          allowBlank:false,
+          emptyText:'空',
+          vtype:'alphanum',
+          vtypeText:'',
+          msgTarget:'side'
+    });
+
     var faxField = new Ext.form.TextField({
         fieldLabel: '传真',
         name:'fax',
         allowBlank:false,
         emptyText:'空',
         msgTarget:'side'
+    });
+
+    var faxEditField = new Ext.form.TextField({
+        fieldLabel:'传真',
+          name:'fax',
+          allowBlank:false,
+          emptyText:'空',
+          vtype:'alphanum',
+          vtypeText:'',
+          msgTarget:'side'
     });
