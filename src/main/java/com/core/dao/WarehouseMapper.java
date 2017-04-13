@@ -25,4 +25,7 @@ public interface WarehouseMapper {
     List<Warehouse> searchWarehouse(int offset, int rows);
 
     int countWarehouse();
+
+	void updateByWarehouseNo(@Param(value = "name") String name,@Param(value = "remark") String remark,
+			@Param(value="warehouseno") String warehouseNo);
 }

@@ -17,11 +17,17 @@ public interface VendorMapper {
 
     int updateByPrimaryKeySelective(Vendor record);
 
-    int updateByPrimaryKey(Vendor record);
+    int updateByVendorNo(Vendor vendor);
     List<Vendor> listVendor(@Param(value = "name") String vendorName, @Param(value = "start") int start,
             @Param(value = "limit") int limit);
 
     List<Vendor> searchVendor(int offset, int rows);
 
     int countVendor();
+
+
+    void updateByVendorNo(@Param(value = "vendorname") String vendorName,
+    @Param(value = "address") String address, @Param(value="vendorno") String vendorNo,
+    @Param(value = "telno") String telno, @Param(value="email") String email,
+    @Param(value = "remark") String remark, @Param(value="fax") String fax);
 }

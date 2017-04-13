@@ -25,4 +25,9 @@ public interface UserMapper {
     List<User> searchUser(int offset, int rows);
 
     int countUser();
+
+    User validate(@Param(value = "username") String username, @Param(value = "password") String password);
+
+    void updateByUserNo(@Param(value = "username") String username,
+    		@Param(value = "password") String password, @Param(value="userno") String userNo);
 }

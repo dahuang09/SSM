@@ -38,7 +38,9 @@ public interface ItemMapper {
 
     List<Item> listItemInCategory(@Param(value = "categoryno") String name);
 
+    List<Item> listAvailableItem(@Param(value = "categoryno") String name);
+
     List<Item> listItemInCategoryId(@Param(value = "id") String categoryId);
 
-    List<Item> listAvailableItem(@Param(value = "categoryno") String name);
+    List<Item> searchItem();
 }
