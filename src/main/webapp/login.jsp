@@ -3,7 +3,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
     <HEAD>
-        <TITLE>库存管理系统 —— 登 录</TITLE>
+        <TITLE>库存管理系统登录</TITLE>
         <META http-equiv=Content-Type content="text/html; charset=UTF-8">
         <LINK href="css/global.css" type=text/css rel=STYLESHEET>
         <style type="text/css">
@@ -32,7 +32,7 @@
         </script>
     </HEAD>
     <BODY bgColor=#ffffff leftMargin=0 topMargin=0 rightMargin=0
-        marginheight="0" marginwidth="0" onload="javascript:document.form1.username.focus();">
+        marginheight="0" marginwidth="0">
         <CENTER>
             <DIV style="WIDTH: 100%; BACKGROUND-COLOR: #ffffff">
                 <IMG height=3 src="images/spacer.gif" width=1>
@@ -74,7 +74,7 @@
                                     </DIV>
                                     <DIV
                                         style="PADDING-LEFT: 35px; PADDING-BOTTOM: 20px; PADDING-TOP: 40px; align: left">
-                                        <IMG src="images/logo.gif" border=0>
+                                        <IMG src="images/logo2.gif" border=0>
                                     </DIV>
                                     <DIV style="PADDING-RIGHT: 15px; PADDING-LEFT: 35px">
                                         <TABLE cellSpacing=0 cellPadding=0 width=689 border=0>
@@ -90,13 +90,13 @@
                                                                 </TR>
                                                                 <TR>
                                                                     <TD class=content_gray_bold>
-                                                                        请输入您的用户名和密码登录系统。
+                                                                      	  请输入您的用户名和密码登录系统。
                                                                     </TD>
                                                                 </TR>
                                                             </TBODY>
                                                         </TABLE>
                                                         <!-- Begin Form -->
-                                                        <form method="post" action="securit/login" name="form1" onsubmit="return check()">
+                                                        <form method="post" action="security/login" name="form1" onsubmit="return check()">
                                                             <TABLE cellSpacing=0 cellPadding=0 width=318 border=0>
                                                                 <TBODY>
                                                                     <TR>
@@ -107,7 +107,7 @@
                                                                         <TD align=left>
                                                                             <SPAN class=content_black_bold>用户名</SPAN>
                                                                             <BR>
-                                                                            <FONT class=form><input type="text" name="name"> </FONT>
+                                                                            <FONT class=form><input type="text" name="userName"> </FONT>
 
                                                                         </TD>
                                                                     </TR>
@@ -124,19 +124,25 @@
                                                                         </TD>
                                                                     </TR>
                                                                     <TR>
-                                                                        <TD height=10>
+                                                                        <!-- <TD height=10>
                                                                             <IMG height=10 alt=""
                                                                                 src="images/spacer.gif"
                                                                                 width=1 border=0>
-                                                                                <input type="radio" name="leve" value="A" checked="checked">管理员&nbsp;&nbsp; &nbsp; &nbsp;<input type="radio" name="leve" value="B">用户<br/>
+                                                                                <input type="radio" name="level" value="1" checked="checked">管理员&nbsp;&nbsp; &nbsp; &nbsp;<input type="radio" name="leve" value="0">用户<br/>
                                                                                 <span style="color:red;"><property value="#session.tip" /></span>
-                                                                        </TD>
+                                                                        </TD> -->
                                                                     </TR>
                                                                     <TR>
                                                                         <TD noWrap align=right>
                                                                             <span style="padding-right: 20px;"><input type="submit" value="提  交"/></span>
                                                                         </TD>
                                                                     </TR>
+                                                                    <TR>
+                                                                    	<TD style="color:red">
+                                                                    	${sessionScope.msg}
+                                                                   	    </TD>
+                                                                    </TR>
+
                                                                 </TBODY>
                                                             </TABLE>
                                                         </form>
@@ -160,10 +166,6 @@
                                                                     <TD class=content_gray vAlign=top>
                                                                         <embed width="330" height="152" src="images/banner.swf" menu="false" type="application/x-shockwave-flash"/>
                                                                         <br/>
-                                                                        好累啊，头痛啊，谁来帮我按个摩吧，100块！！！
-                                                                        <br />
-                                                                        好累啊，头痛啊，谁来帮我按个摩吧，100块！！！
-                                                                        <br />
                                                                         <br />
                                                                     </TD>
                                                                 </TR>
