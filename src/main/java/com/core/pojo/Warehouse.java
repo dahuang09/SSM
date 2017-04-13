@@ -1,5 +1,8 @@
 package com.core.pojo;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Warehouse {
     private String id;
 
