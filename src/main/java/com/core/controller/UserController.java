@@ -7,13 +7,19 @@
 // ============================================================================
 package com.core.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.type.TypeReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,13 +28,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.core.pojo.OrderIn;
 import com.core.pojo.User;
 import com.core.service.IUserService;
 
-/**
- * @author damon.huang
- *
- */
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -45,7 +48,7 @@ public class UserController {
     @RequestMapping(path="/showUser", method=RequestMethod.GET)
     public String toIndex(final HttpServletRequest request,final Model model){
         final String userId = request.getParameter("id");
-        logger.info("damon test");
+        logger.info("joyce test");
         final User user = this.userService.getUserById(userId);
         model.addAttribute("user", user);
         return "showUser";
@@ -62,6 +65,24 @@ public class UserController {
         } catch (final Throwable e) {
             logger.error("添加用户失败", e);
         }
+        return map;
+    }
+
+    @RequestMapping(value="/update", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> updateUser(@RequestBody final Map<String, Object> parameters){
+    	final Map<String, Object> map = new HashMap<String, Object>();
+    	final String jsonParam = (String) parameters.get("jsonParam");
+        final ObjectMapper mapper = new ObjectMapper();
+        mapper.registerSubtypes(User.class);
+        try {
+			final List<User> users = mapper.readValue(jsonParam, new TypeReference<List<User>>(){});
+			userService.updateUsers(users);
+		} catch (Throwable e) {
+			logger.error("修改用户失败", e);
+			map.put("success", false);
+		}
+        map.put("success", true);
         return map;
     }
 

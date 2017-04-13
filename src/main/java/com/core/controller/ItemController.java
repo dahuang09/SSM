@@ -48,7 +48,7 @@ public class ItemController {
           map.put("success", true);
           map.put("bizNo", userNo);
       } catch (final Throwable e) {
-          logger.error("添加商品失败", e);
+          logger.error("添加商�?失败", e);
       }
       return map;
   }
@@ -112,7 +112,7 @@ public class ItemController {
       return map;
   }
 
-  @RequestMapping(path="/searchAvailableItem", method=RequestMethod.POST)
+   @RequestMapping(path="/searchAvailableItem", method=RequestMethod.POST)
   public Map<String, Object> searchAvailableItem(@RequestBody final Map<String, Object> parameters){
       final Object nameObj = parameters.get("name");
       final String name = ObjectUtils.toString(nameObj);
@@ -120,6 +120,16 @@ public class ItemController {
       final Map<String, ?> returnMap = itemService.searchAvailableItem(name);
       map.put("itemList", returnMap.get("itemList"));
       map.put("total", returnMap.get("total"));
+      map.put("success", true);
+      return map;
+  }
+
+  @RequestMapping(path="/searchItem", method=RequestMethod.POST)
+  public Map<String, Object> searchItem(@RequestBody final Map<String, Object> parameters){
+      final Map<String, Object> map = new HashMap<String, Object>();
+      final List<Item> items = itemService.searchItem();
+      map.put("itemList", items);
+      map.put("total", items.size());
       map.put("success", true);
       return map;
   }
