@@ -1,16 +1,4 @@
-[{
-            text:'用户',
-                leaf:true,
-                id:'1'
-        },{
-            text:'仓库',
-                leaf:true,
-                id:'2'
-        },{
-            text:'供应商',
-                leaf:true,
-                id:'3'
-        },{
+﻿[{
             text : '商品信息',
             children : [{
                         text : '商品类目',
@@ -46,26 +34,21 @@
             id:'9'
         },{
             text:'统计',
-            children : [
-                        {
-                            text : '按供应商统计',
+            children : [{
+                            text : '按商品统计',
                             id : '10',
                             leaf:true
                         }, {
-                            text : '按商品统计',
-                            id : '11',
-                            leaf:true
-                        }, {
                             text : '按商品类别统计',
-                            id : '12',
+                            id : '11',
                             leaf:true
                         },{
                             text : '按入库统计',
-                            id : '13',
+                            id : '',
                             leaf:true
                         }, {
                             text : '按出库统计',
-                            id : '14',
+                            id : '',
                             leaf:true
                         }]
         }]

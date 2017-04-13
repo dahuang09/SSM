@@ -287,7 +287,7 @@ var tree = new Ext.tree.TreePanel({
                                     modal : true,
                                     title : '关于本系统',
                                     html : '本系统采用目前较为流行的技术实现,<br>前台使用了ExtJs技术,所以实现了跨浏览器<br>' +
-                                            '本程序在IE6,IE7,IE8,IE9,chrome,FireFox均测试通过!<br><br>主要技术: Struts2 + hibernate3 + ExtJs3.3.1<br><br>'
+                                            '本程序在IE6,IE7,IE8,IE9,chrome,FireFox均测试通过!<br><br>主要技术: Spring + SpringMVC + MyBatis + ExtJs<br><br>'
                                             + '数&nbsp;&nbsp;据&nbsp;&nbsp;库: MySQL',
                                     width : 300,
                                     height : 200
@@ -301,9 +301,9 @@ var tree = new Ext.tree.TreePanel({
                                 Ext.Msg.confirm('操作提示', '您确定要退出本系统?', function(btn) {
                                     if ('yes' == btn) {
                                         Ext.Ajax.request({
-                                            url : 'Logout.action',
+                                            url : 'security/logout',
                                             success : function() {
-                                                location = '/schoolmanagement/index.jsp';
+                                                location = '/SSM/login.jsp';
                                             },
                                             failure : function() {
                                                 Ext.Msg.show({
@@ -328,7 +328,7 @@ var tree = new Ext.tree.TreePanel({
 
 
     var root = new Ext.tree.AsyncTreeNode({
-        text:'周老板仓库管理菜单'//,
+        text:'Joyce仓库管理'//,
         //id : '0',
         //children :
     });
@@ -350,6 +350,28 @@ var tree = new Ext.tree.TreePanel({
                             html : '<iframe id="Sub1" name="Sub" scrolling="auto" frameborder="0" width="100%" height="100%" src="common/user.jsp"></iframe>'
 
 
+                        });
+            }
+        }
+        if (nodeId == 2) {
+            if (!n) {
+                n = contentPanel.add( {
+                            'id' : node.id,
+                            iconCls:'tabs',
+                                'title' : node.text,
+                            closable : true,
+                            html : '<iframe name="Sub" scrolling="auto" frameborder="0" width="100%" height="100%" src="common/warehouse.jsp"></iframe>'
+                        });
+            }
+        }
+        if (nodeId == 3) {
+            if (!n) {
+                n = contentPanel.add( {
+                            'id' : node.id,
+                            iconCls:'tabs',
+                                'title' : node.text,
+                            closable : true,
+                            html : '<iframe name="Sub" scrolling="auto" frameborder="0" width="100%" height="100%" src="common/vendor.jsp"></iframe>'
                         });
             }
         }
@@ -401,109 +423,66 @@ var tree = new Ext.tree.TreePanel({
                             });
                 }
             }
-
-            if (nodeId == 2) {
+            if (nodeId == 9) {
                 if (!n) {
                     n = contentPanel.add( {
                                 'id' : node.id,
                                 iconCls:'tabs',
                                     'title' : node.text,
                                 closable : true,
-                                html : '<iframe name="Sub" scrolling="auto" frameborder="0" width="100%" height="100%" src="common/warehouse.jsp"></iframe>'
+                                html : '<iframe name="Sub" scrolling="auto" frameborder="0" width="100%" height="100%" src="common/alertSetting.jsp"></iframe>'
                             });
                 }
             }
 
-            if (nodeId == 3) {
+            if (nodeId == 10) {
                 if (!n) {
                     n = contentPanel.add( {
                                 'id' : node.id,
                                 iconCls:'tabs',
                                     'title' : node.text,
                                 closable : true,
-                                html : '<iframe name="Sub" scrolling="auto" frameborder="0" width="100%" height="100%" src="common/vendor.jsp"></iframe>'
+                                html : '<iframe name="Sub" scrolling="auto" frameborder="0" width="100%" height="100%" src="common/statisticVendor.jsp"></iframe>'
+                            });
+                }
+            }
+            if (nodeId == 11) {
+                if (!n) {
+                    n = contentPanel.add( {
+                                'id' : node.id,
+                                iconCls:'tabs',
+                                    'title' : node.text,
+                                closable : true,
+                                html : '<iframe name="Sub" scrolling="auto" frameborder="0" width="100%" height="100%" src="common/statisticItem.jsp"></iframe>'
+                            });
+                }
+            }
+            if (nodeId == 12) {
+                if (!n) {
+                    n = contentPanel.add( {
+                                'id' : node.id,
+                                iconCls:'tabs',
+                                    'title' : node.text,
+                                closable : true,
+                                html : '<iframe name="Sub" scrolling="auto" frameborder="0" width="100%" height="100%" src="common/statisticCategory.jsp"></iframe>'
+                            });
+                }
+            }
+            if (nodeId == 15) {
+                if (!n) {
+                    n = contentPanel.add( {
+                                'id' : node.id,
+                                iconCls:'tabs',
+                                    'title' : node.text,
+                                closable : true,
+                                html : '<iframe name="Sub" scrolling="auto" frameborder="0" width="100%" height="100%" src="common/search.jsp"></iframe>'
                             });
                 }
             }
 
-            if (nodeId == 8) {
-                if (!n) {
-                    n = contentPanel.add( {
-                                'id' : node.id,
-                                iconCls:'tabs',
-                                    'title' : node.text,
-                                closable : true,
-                                html : '<iframe name="Sub" scrolling="auto" frameborder="0" width="100%" height="100%" src="common/returnItem.jsp"></iframe>'
-                            });
-                }
-            }
-            if (nodeId == 52) {
-                if (!n) {
-                    n = contentPanel.add( {
-                                'id' : node.id,
-                                iconCls:'tabs',
-                                    'title' : node.text,
-                                closable : true,
-                                html : '<iframe name="Sub" scrolling="auto" frameborder="0" width="100%" height="100%" src="superuser/oldunroomlist.jsp"></iframe>'
-                            });
-                }
-            }
+
+
 
 
             contentPanel.setActiveTab(n);
     });
-
-
-
- /*//表单校验
- //校验
-       Ext.apply(Ext.form.VTypes, {
-           checkoldpassword:function(val, field) {     //返回true，则验证通过，否则验证失败
-          if (field.checkoldpassword) {               //如果表单有使用repetition配置，repetition配置是一个JSON对象，该对象提供了一个名为targetCmpId的字段，该字段指定了需要进行比较的另一个组件ID。
-              var cmp = Ext.getCmp(field.checkoldpassword.targetCmpId);   //通过targetCmpId的字段查找组件
-             if (Ext.isEmpty(cmp)) {      //如果组件（表单）不存在，提示错误
-                  Ext.MessageBox.show({
-                      title: '错误',
-                      msg: '发生异常错误，指定的组件未找到',
-                      icon: Ext.Msg.ERROR,
-                     buttons: Ext.Msg.OK
-                 });
-                return false;
-            }
-
-             if (val == cmp.getValue()) {  //取得目标组件（表单）的值，与宿主表单的值进行比较。
-                return true;
-             } else {
-                 return false;
-             }
-          }
-
-    },
-     checkoldpasswordText: '旧的密码不一致',
-
-     //密码检验
-      repetition: function(val, field) {     //返回true，则验证通过，否则验证失败
-          //if (field.repetition) {               //如果表单有使用repetition配置，repetition配置是一个JSON对象，该对象提供了一个名为targetCmpId的字段，该字段指定了需要进行比较的另一个组件ID。
-              //var cmp = Ext.getCmp(field.repetition.targetCmpId);   //通过targetCmpId的字段查找组件
-
-             if (Ext.isEmpty(cmp)) {      //如果组件（表单）不存在，提示错误
-                  Ext.MessageBox.show({
-                      title: '错误',
-                      msg: '发生异常错误，指定的组件未找到',
-                      icon: Ext.Msg.ERROR,
-                     buttons: Ext.Msg.OK
-                 });
-                return false;
-            }
-              var cmp = Ext.getCmp('newpassword1');
-             if (val == cmp.getValue()) {  //取得目标组件（表单）的值，与宿主表单的值进行比较。
-                return true;
-             } else {
-                 return false;
-            // }
-         }
-    },
-     repetitionText: '密码不一致'
- });*/
-
-
