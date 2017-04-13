@@ -332,11 +332,11 @@
       }
 
       function renderBoolean(value){
-    	  if(value == 2) {
-    		  return "否";
-    	  } else {
-    		  return "是";
-    	  }
+          if(value == 0) {
+              return "否";
+          } else {
+              return "是";
+          }
 
       }
 
@@ -395,11 +395,13 @@
     });
     var isAdminField = new Ext.form.RadioGroup({
         fieldLabel: '超级管理员',
-        anchor: '50%',
-        columns: 2,
-        vertical: true,
+        width:150,
         items: [
-            { boxLabel: '是', name: 'isadmin', inputValue: '1'},
-            { boxLabel: '否', name: 'isadmin', inputValue: '0' }
+            { boxLabel: '是', name: 'isadmin', inputValue: 1},
+            { boxLabel: '否', name: 'isadmin', inputValue: 0,checked:true}
         ]
     });
+
+
+
+

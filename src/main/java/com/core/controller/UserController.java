@@ -7,7 +7,6 @@
 // ============================================================================
 package com.core.controller;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,8 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.log4j.Logger;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.core.pojo.OrderIn;
 import com.core.pojo.User;
 import com.core.service.IUserService;
 
@@ -71,17 +67,17 @@ public class UserController {
     @RequestMapping(value="/update", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> updateUser(@RequestBody final Map<String, Object> parameters){
-    	final Map<String, Object> map = new HashMap<String, Object>();
-    	final String jsonParam = (String) parameters.get("jsonParam");
+        final Map<String, Object> map = new HashMap<String, Object>();
+        final String jsonParam = (String) parameters.get("jsonParam");
         final ObjectMapper mapper = new ObjectMapper();
         mapper.registerSubtypes(User.class);
         try {
-			final List<User> users = mapper.readValue(jsonParam, new TypeReference<List<User>>(){});
-			userService.updateUsers(users);
-		} catch (Throwable e) {
-			logger.error("修改用户失败", e);
-			map.put("success", false);
-		}
+            final List<User> users = mapper.readValue(jsonParam, new TypeReference<List<User>>(){});
+            userService.updateUsers(users);
+        } catch (final Throwable e) {
+            logger.error("修改用户失败", e);
+            map.put("success", false);
+        }
         map.put("success", true);
         return map;
     }

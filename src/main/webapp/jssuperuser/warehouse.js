@@ -41,7 +41,7 @@ Ext.onReady(function() {
             {name: 'remark', mapping: 'remark', type: 'string'}
         ]) ,
         pruneModifiedRecords:true,
-        groupField:'warehouseno',
+        groupField:'',
         sortInfo:{field:'warehouseno',direction:"ASC"}
     });
 
@@ -322,15 +322,15 @@ function renderusername(value){
       msgTarget:'side'
     });
      var nameEditField = new Ext.form.TextField({
-    	    fieldLabel:'仓库名称',
-    	      name:'name',
-    	      allowBlank:false,
-    	      msgTarget:'side'
-    	});
+            fieldLabel:'仓库名称',
+              name:'name',
+              allowBlank:false,
+              msgTarget:'side'
+        });
      var remarkEditField = new Ext.form.TextField({
- 	    fieldLabel:'备注',
- 	      name:'remark',
- 	      allowBlank:false,
- 	      msgTarget:'side'
- 	});
+         fieldLabel:'备注',
+           name:'remark',
+           allowBlank:false,
+           msgTarget:'side'
+     });
 

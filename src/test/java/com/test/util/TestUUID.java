@@ -5,7 +5,7 @@
 // CHANGE LOG
 // CNT.5.0.1 : 2017-XX-XX, damon.huang, creation
 // ============================================================================
-package com.test.service;
+package com.test.util;
 
 import com.core.util.UuidUtil;
 
