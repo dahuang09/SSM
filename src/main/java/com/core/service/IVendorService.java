@@ -11,14 +11,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.core.pojo.Vendor;
-
-/**
- * @author damon.huang
- *
- */
 public interface IVendorService {
     public Vendor getVendorById(String vendorId);
     public String addVendor(Vendor vendor) throws Throwable;
     Map<String, ?> listVendor(String vendorName, int start, int limit);
     List<Vendor> searchVendor();
+    void updateVendors(List<Vendor> vendors) throws Exception;
 }

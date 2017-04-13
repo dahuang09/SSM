@@ -150,8 +150,7 @@ public class ItemServiceImpl implements IItemService {
      * @see com.core.service.IItemService#searchItem()
      */
     public List<Item> searchItem() {
-        // TODO Auto-generated method stub
-        return null;
+    	return itemMapper.searchItem();
     }
 
     /* (non-Javadoc)
@@ -171,17 +170,6 @@ public class ItemServiceImpl implements IItemService {
     public Map<String, ?> searchAvailableItem(final String name) {
         final Map<String, Object> map = new HashMap<String, Object>();
         final List<Item> itemList = itemMapper.listAvailableItem(name);
-        map.put("total", itemList.size());
-        map.put("itemList", itemList);
-        return map;
-    }
-
-    /* (non-Javadoc)
-     * @see com.core.service.IItemService#listItemInCategoryId(java.lang.String)
-     */
-    public Map<String, ?> listItemInCategoryId(final String categoryId) {
-        final Map<String, Object> map = new HashMap<String, Object>();
-        final List<Item> itemList = itemMapper.listItemInCategoryId(categoryId);
         map.put("total", itemList.size());
         map.put("itemList", itemList);
         return map;

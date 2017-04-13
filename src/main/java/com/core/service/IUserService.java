@@ -22,4 +22,6 @@ public interface IUserService {
     public String addUser(User user) throws Throwable;
     Map<String, ?> listUser(String userName, int start, int limit);
     List<User> searchUser() throws ServiceException;
+    User validate(String userName,String password) throws Exception;
+    void updateUsers(List<User> users) throws Exception;
 }

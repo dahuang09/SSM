@@ -94,7 +94,7 @@ public class OrderInServiceImpl implements IOrderInService {
             itemMapper.increaseItemActualStock(itemNo, actualStock);
         }
 
-        log.info("入库交易单创建成功");
+        log.info("test");
     }
 
     private String createTradeIn() {
@@ -133,5 +133,4 @@ public class OrderInServiceImpl implements IOrderInService {
         map.put("orderInList", orderList);
         return map;
     }
-
 }

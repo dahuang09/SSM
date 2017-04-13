@@ -25,14 +25,11 @@ import com.core.exception.ServiceException;
 import com.core.pojo.BizNoDefinition;
 import com.core.pojo.User;
 import com.core.service.IUserService;
+import com.core.util.Md5Util;
 import com.core.util.UuidUtil;
 
-/**
- * @author damon.huang
- *
- */
 @Service("userService")
-public class UserServiceImpl implements IUserService {
+public class UserServiceImpl implements IUserService{
 
     private final String USER_SUFIX = "User";
     private final String formatTemplate = "yyyy-MM-dd";
@@ -64,6 +61,9 @@ public class UserServiceImpl implements IUserService {
             setUUID(user);
             bizNo = generateUserNo();
             user.setUserno(bizNo);
+            String plainPwd = user.getPassword();
+            String md5Pwd = Md5Util.toMD5(plainPwd);
+            user.setPassword(md5Pwd);
             user.setIsdeleted(0);
             this.userMapper.insert(user);
         } catch (final Throwable e) {
@@ -120,5 +120,29 @@ public class UserServiceImpl implements IUserService {
         map.put("usreList", userList);
         return map;
     }
+	public User validate(String userName, String password) throws Exception{
+		try {
+			String	encodedPassword = Md5Util.toMD5(password);
+			User user = userMapper.validate(userName,encodedPassword);
+			return user;
+		} catch (Exception e) {
+			log.error("根据用户名和密码找不回来数据, userName" + userName + ", password=" + password, e);
+			throw e;
+		}
+	}
+
+	public void updateUsers(List<User> users) throws Exception {
+		if(users == null || users.size() == 0) {
+			return;
+		}
+		for (User user : users) {
+			String userName = user.getUsername();
+			String userNo = user.getUserno();
+			String plainPwd = user.getPassword();
+            String md5Pwd = Md5Util.toMD5(plainPwd);
+			userMapper.updateByUserNo(userName, md5Pwd, userNo);
+		}
+		log.info("修改用户完成");
+	}
 
 }

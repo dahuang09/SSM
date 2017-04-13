@@ -12,10 +12,7 @@ import java.util.Map;
 
 import com.core.pojo.OrderIn;
 
-/**
- * @author damon.huang
- *
- */
+
 public interface IOrderInService {
     void addOrderIns(List<OrderIn> orderIns);
     Map<String, ?> listOrderIn(String name, int start, int limit);

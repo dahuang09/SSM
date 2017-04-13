@@ -22,4 +22,5 @@ public interface IWarehouseService {
     public String addWarehouse(Warehouse warehouse) throws Throwable;
     Map<String, ?> listWarehouse(String warehouseName, int start, int limit);
     List<Warehouse> searchWarehouse() throws ServiceException;
+   void updateWarehouses(List<Warehouse> warehouses)throws Exception;
 }

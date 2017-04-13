@@ -22,8 +22,10 @@ import com.core.dao.BizNoDefinitionMapper;
 import com.core.dao.WarehouseMapper;
 import com.core.exception.ServiceException;
 import com.core.pojo.BizNoDefinition;
+import com.core.pojo.User;
 import com.core.pojo.Warehouse;
 import com.core.service.IWarehouseService;
+import com.core.util.Md5Util;
 import com.core.util.UuidUtil;
 @Service("warehouseService")
 public class WarehouseServiceImpl implements IWarehouseService {
@@ -34,6 +36,7 @@ public class WarehouseServiceImpl implements IWarehouseService {
     private WarehouseMapper warehouseMapper;
     @Resource
     private BizNoDefinitionMapper bizNoDefinitionMapper;
+	private Warehouse warehouse;
     /* (non-Javadoc)
      * @see com.core.service.IWarehouseService#getWarehouseById(java.lang.String)
      */
@@ -109,6 +112,23 @@ public class WarehouseServiceImpl implements IWarehouseService {
         map.put("warehouseList", warehouseList);
         return map;
     }
+
+	public void updateWarehouses(List<Warehouse> warehouses) throws Exception {
+		if(warehouses == null || warehouses.size() == 0) {
+			return;
+		}
+		for (Warehouse warehouse : warehouses) {
+			String name = warehouse.getName();
+			String warehouseNo = warehouse.getWarehouseno();
+			String remark = warehouse.getRemark();
+
+			warehouseMapper.updateByWarehouseNo(name, warehouseNo, remark);
+		}
+		log.info("修改仓库完成");
+
+	}
+
+
 
 
 }

@@ -95,7 +95,7 @@ public class OrderOutServiceImpl implements IOrderOutService {
             itemMapper.reduceItemActualStock(itemNo, actualStock);
         }
 
-        log.info("出库交易单创建成功");
+        log.info("test");
 
     }
 

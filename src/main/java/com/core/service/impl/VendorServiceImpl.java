@@ -23,8 +23,10 @@ import com.core.dao.BizNoDefinitionMapper;
 import com.core.dao.VendorMapper;
 import com.core.exception.ServiceException;
 import com.core.pojo.BizNoDefinition;
+import com.core.pojo.User;
 import com.core.pojo.Vendor;
 import com.core.service.IVendorService;
+import com.core.util.Md5Util;
 import com.core.util.UuidUtil;
 
 /**
@@ -114,6 +116,24 @@ public class VendorServiceImpl implements IVendorService {
         map.put("vendorList", vendorList);
         return map;
     }
+
+    public void updateVendors(List<Vendor> vendors) throws Exception {
+		if(vendors == null || vendors.size() == 0) {
+			return;
+		}
+		for (Vendor vendor : vendors) {
+			String vendorNo =  vendor.getVendorno();
+			String vendorName = vendor.getVendorname();
+			String address = vendor.getAddress();
+			String telNo = vendor.getTelno();
+            String email = vendor.getEmail();
+            String remark = vendor.getRemark();
+			String fax = vendor.getFax();
+			vendorMapper.updateByVendorNo(vendorNo,vendorName,address,telNo,email,remark,fax);
+		}
+		log.info("修改供应商完成");
+	}
+
 
 
 
