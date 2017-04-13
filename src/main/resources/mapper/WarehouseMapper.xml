@@ -110,4 +110,21 @@
       WarehouseNo = #{warehouseno,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
+
+   <update id="updateByWarehouseNo" parameterType="com.core.pojo.Warehouse">
+    update warehouse
+    set
+    <if test="(name != null or name != '') and (remark != null or remark != '')">
+    	Name = #{name,jdbcType=VARCHAR},
+        Remark = #{remark,jdbcType=VARCHAR}
+    </if>
+    <if test="(name != null or name != '') and (remark == null or remark == '')">
+    	Remark = #{remark,jdbcType=VARCHAR}
+    </if>
+    <if test="(name == null or name == '') and (remark != null or remark != '')">
+    	Name = #{name,jdbcType=VARCHAR}
+    </if>
+    where warehouseNo = #{warehouseno,jdbcType=VARCHAR}
+  </update>
+
 </mapper>

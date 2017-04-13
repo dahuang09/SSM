@@ -73,6 +73,12 @@
     </where>
   </select>
 
+  <select id="searchItem" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from item it
+  </select>
+
   <select id="listItemInCategory" parameterType="java.util.Map" resultMap="ItemCategoryResult">
     select
     it.id as "id",

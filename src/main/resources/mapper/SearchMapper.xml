@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.core.dao.VendorMapper">
-  <resultMap id="BaseResultMap" type="com.core.pojo.Vendor">
+<mapper namespace="com.core.dao.SearchMapper">
+  <resultMap id="BaseResultMap" type="com.core.pojo.Search">
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="vendorName" jdbcType="VARCHAR" property="vendorname" />
     <result column="address" jdbcType="VARCHAR" property="address" />
@@ -12,9 +12,50 @@
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="vendorNo" jdbcType="VARCHAR" property="vendorno" />
   </resultMap>
-  <sql id="Base_Column_List">
-    id, vendorName, address, telNo, email, fax, isDeleted, remark, vendorNo
-  </sql>
+   <sql id="Base_Column_List">
+  id,itemName,category,productDate,expireDate,keepPeriod,price,amount,total,safetyStock,
+warehouse,vendor
+   </sql>
+
+   <select id="searchWarehouse" parameterType="java.util.Map" resultMap="BaseResultMap">
+   	<bind name="itemnameP" value="'%' + itemname + '%'"/>
+   	<bind name="vendornameP" value="'%' + vendorname + '%'"/>
+   	<bind name="warehousenameP" value="'%' + warehousename + '%'"/>
+    select
+    oi.id as "id",
+    oi.orderInNo as "orderInNo",
+    oi.amount as "amount",
+    oi.total as "total",
+    oi.productDate as "productDate",
+    oi.keepPeriod as "keepPeriod",
+    oi.expiredDate as "expiredDate",
+    oi.remark as "remark",
+    cy.name as "categoryName",
+    it.itemname as "itemName",
+    vd.vendorname as "vendorName",
+    wh.name as "warehouseName",
+    ti.tradeinno as "tradeInNo"
+    from orderin oi
+    inner join tradein ti on ti.id = oi.tradein_id
+    inner join item it on it.id = oi.item_id
+    inner join category cy on cy.id = it.category_id
+    inner join vendor vd on vd.id = oi.vendor_id
+    inner join warehouse wh on wh.id = oi.warehouse_id
+    <where>
+        <if test="itemname != ''">
+        and it.itemname like #{itemnameP}
+        </if>
+        <if test="vendorname != ''">
+        and v.vendorname like #{vendornameP}
+        </if>
+        <if test="warehousename != ''">
+        and wh.name like #{warehousenameP}
+        </if>
+    </where>
+    limit #{start}, #{limit}
+   </select>
+
+
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
@@ -138,24 +179,6 @@
       remark = #{remark,jdbcType=VARCHAR},
       vendorNo = #{vendorno,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
-  </update>
-
-
-<update id="updateByVendorNo" parameterType="com.core.pojo.Vendor">
-    update vendor
-    set
-    <if test="(vendorname != null or vendorname != '') and (address != null or address != '')
-          and (telno != null or telno != '') and (email != null or email != '')
-          and (remark != null or remark != '') and (fax != null or fax != '')"
-    >
-    	vendorName = #{vendorname,jdbcType=VARCHAR},
-        Address = #{address,jdbcType=VARCHAR},
-        telNo = #{telno,jdbcType=VARCHAR},
-        Email = #{email,jdbcType=VARCHAR},
-        Remark = #{remark,jdbcType=VARCHAR},
-        Fax = #{fax,jdbcType=VARCHAR}
-    </if>
-    where vendorNo = #{vendorno,jdbcType=VARCHAR}
   </update>
 
   <select id="countVendor" resultType="java.lang.Integer">
